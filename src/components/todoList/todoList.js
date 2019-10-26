@@ -1,13 +1,28 @@
 import React from 'react';
 import TodoItem from '../todoItem';
 
-const TodoList = (props) => {
+import './todoList.css';
 
-    if(!props.todo.length) return null;
+const TodoList = ({todo, onDeleted, addToDone, addToImportant}) => {
+
+    if(!todo.length) return null;
 
     return (
-        <ul className="list-group">
-            {props.todo.map((item, index) => <TodoItem key = {item+index} item={item} />)}
+        <ul className="list-group container-fluid">
+            {todo.map(({name,id, important, done}) => {
+                return (
+                    <TodoItem 
+                        key = {id} 
+                        name={name}
+                        important={important}
+                        done={done}
+                        delItem={() => onDeleted(id)}
+                        addToDone={() => addToDone(id)}
+                        addToImportant={() => addToImportant(id)}
+                    />
+                )
+             })
+            }
         </ul>
     );
 };

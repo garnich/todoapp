@@ -1,0 +1,9 @@
+.title h1{
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.title span {
+    font-size: 20px;
+    margin-left: 10px;
+}

@@ -2,3 +2,28 @@ span {
     font-style: italic;
     color: green;
 }
+span:hover{
+    cursor: pointer;
+}
+
+.done{
+    text-decoration: line-through;
+}
+
+.important{
+    font-weight: bold;
+    color: tomato;
+    font-style: normal;
+}
+.fa-trash-o{
+    color:red;
+}
+button > .fa-trash-o:hover{
+    color:#fff;
+}
+.fa-flag{
+    color:green;
+}
+button > .fa-flag:hover{
+    color:#fff;
+}

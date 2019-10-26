@@ -22,7 +22,9 @@
     "webpack-dev-server": "^3.8.0"
   },
   "dependencies": {
+    "firebase": "^7.1.0",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-router-dom": "^5.1.2"
   }
 }
