@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --open --mode development --hot",
+    "dev": "webpack-dev-server --open --mode development --hot --history-api-fallback",
     "build": "webpack --mode production"
   },
   "author": "Andrei Ihnatsiuk",
