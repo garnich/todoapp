@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactDom from 'react-dom';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Title from './components/title';
 import FormControl from './components/formControl';
 import ItemStatusFilter from './components/itemStatusFilter'
 import TodoList from './components/todoList';
 import NewItem from './components/newItem';
+import Loader from './components/loader';
 import firebase from './Firebase';
 
 
@@ -16,7 +16,6 @@ import './css/main.css';
 class App extends Component{  
     constructor(){
         super();
-        this.maxId = 100;
         this.state = {
             todo: [],
             search: '',
@@ -27,7 +26,7 @@ class App extends Component{
             return {
                 name: label,
                 hide: true,
-                id: maxId++,
+                id: new Date().getTime(),
                 important: false,
                 done: false
             }
@@ -80,7 +79,7 @@ class App extends Component{
                 const newItem = {
                     name: text,
                     hide: true,
-                    id: this.maxId++,
+                    id: new Date().getTime(),
                     important: false,
                     done: false
                 };
@@ -126,51 +125,44 @@ class App extends Component{
                 todo: ToDo
             })
         })
-    }
+    } 
+
+    componentDidUpdate(prevProps, prevState) {
+                const prevTask = prevState.todo[prevState.todo.length - 1];
+                const currentTask = this.state.todo[this.state.todo.length - 1];
+    
+                if(prevState.todo.length && prevTask.id !== currentTask.id){
+                    firebase.database().ref('todo').set(this.state.todo);    
+                }
+        }
 
     render(){
         const { todo, search, filter } = this.state;
         const done = todo.filter(item => item.done === false);
-        const todoFiltered = this.filterParam(todo.filter(item => {
-            if(search.length === 0){
-                return todo;
-            }
-            return item.name.toLowerCase().indexOf(search.toLowerCase()) > -1
-        }), filter)
 
-       return(
-           <Router>
-                <div>
-                    <nav className="d-flex">
-                       <ul className="list-group">
-                            <li>
-                                <Link to="/">Login</Link>
-                            </li>
-                            <li>
-                                <Link to="/todo">ToDo</Link>
-                            </li>
-                        </ul> 
-                    </nav>
-                    
-
-                <hr />
-                    <Route exact path="/">
-                        <div>
-                            <h1>Login</h1>
-                        </div>
-                    </Route>
-                    <Route path="/todo">
+            const todoFiltered = this.filterParam(todo.filter(item => {
+                if(search.length === 0){
+                    return todo;
+                }
+                return item.name.toLowerCase().indexOf(search.toLowerCase()) > -1
+            }), filter);
+        
+       return (
+         <Fragment>
+        {!todo.length && <Loader/>}
+            {!!todo.length && (
+                <div className="col-8 m-auto">                    
                         <div>
                             <Title done={todo.length - done.length} todo={done.length}/>
                             <div className='top-panel d-flex'>
-                            <FormControl 
-                                placeholder='search'
-                                searchParam={this.searchParam}
-                            />
-                            <ItemStatusFilter
-                                filter={filter}  
-                                onFilterChange={this.onFilterChange}                      
-                            />
+                                <FormControl 
+                                    placeholder='search'
+                                    searchParam={this.searchParam}
+                                />
+                                <ItemStatusFilter
+                                    filter={filter}  
+                                    onFilterChange={this.onFilterChange}                      
+                                />
                             </div>
                             {todoFiltered.length ?
                                 <TodoList 
@@ -185,10 +177,9 @@ class App extends Component{
                                 addNewItem={this.addNewItem}
                             />
                         </div> 
-                    </Route> 
-                </div>             
-           </Router>
-        ); 
+                </div>  
+            )}
+        </Fragment>)
     }    
 };
 
