@@ -7,7 +7,7 @@ import ItemStatusFilter from './components/itemStatusFilter'
 import TodoList from './components/todoList';
 import NewItem from './components/newItem';
 import Loader from './components/loader';
-import firebase from './Firebase';
+import firebase, {errorCatcher}  from './Firebase';
 
 
 import './css/main.css';
@@ -33,45 +33,62 @@ class App extends Component{
         };
 
         this.deleteItem = (id) => {
-            this.setState(({todo}) =>{
-                const idx = this.state.todo.findIndex(el => el.id === id);
-                return({
-                    todo: [
-                        ...todo.slice(0,idx), 
-                        ...todo.slice(idx+1)
-                    ]
-                })
-            })
+            const {todo} = this.state;
+            const idx = this.state.todo.findIndex(el => el.id === id);
+
+            this.setState({
+                todo: [
+                    ...todo.slice(0,idx), 
+                    ...todo.slice(idx+1)
+                ]
+            });
+
+            this.deleteItemInFireBase(idx, 'Item REMOVED');
         };
 
-        this.addToDone = (id) => {
-            this.setState(({todo})=>{
-                const idx = this.state.todo.findIndex(el => el.id === id);
-                const oldItem = todo[idx];
-                const newItem = {...oldItem, done: !oldItem.done};
-                return{
-                    todo: [
-                        ...todo.slice(0,idx),
-                        newItem,
-                        ...todo.slice(idx+1)
-                    ]
-                };
+        this.deleteItemInFireBase = (itemIndex, msg) => {
+            firebase.database().ref(`todo/${itemIndex}`)
+            .remove()            
+            .then(() => errorCatcher(false,msg))
+            .catch(error => errorCatcher(error, ''))
+        };
+
+        this.addToDone = (id) => {            
+            const {todo} = this.state;
+            const idx = todo.findIndex(el => el.id === id);
+            const oldItem = todo[idx];
+            const newItem = {...oldItem, done: !oldItem.done};
+
+            this.setState({
+                todo: [
+                    ...todo.slice(0,idx),
+                    newItem,
+                    ...todo.slice(idx+1)
+                ]
             })
+            this.updateItemInFireBase(idx, newItem, 'Item add to DONE');
         };
 
         this.addToImportant = (id) => {
-            this.setState(({todo})=>{
-                const idx = this.state.todo.findIndex(el => el.id === id);
-                const oldItem = todo[idx];
-                const newItem = {...oldItem, important: !oldItem.important};
-                return{
-                    todo: [
-                        ...todo.slice(0,idx),
-                        newItem,
-                        ...todo.slice(idx+1)
-                    ]
-                };
-            })
+            const {todo} = this.state;
+            const idx = todo.findIndex(el => el.id === id);
+            const oldItem = todo[idx];
+            const newItem = {...oldItem, important: !oldItem.important};
+
+            this.setState( {
+                todo: [
+                    ...todo.slice(0,idx),
+                    newItem,
+                    ...todo.slice(idx+1)
+                ]               
+            });  
+
+            this.updateItemInFireBase(idx, newItem, 'Item change importance');
+        }
+
+        this.updateItemInFireBase = (itemIndex, newItemData, msg) => {
+            firebase.database().ref(`todo/${itemIndex}`)
+            .update(newItemData, error => errorCatcher(error,msg));
         }
 
         this.addNewItem = (text) => {
@@ -123,16 +140,22 @@ class App extends Component{
             const ToDo = snapshot.val();
             this.setState({
                 todo: ToDo
-            })
+            }), 
+            error => errorCatcher(error,'Connection to DataBase')            
         })
     } 
 
     componentDidUpdate(prevProps, prevState) {
                 const prevTask = prevState.todo[prevState.todo.length - 1];
                 const currentTask = this.state.todo[this.state.todo.length - 1];
+                const prevLength = prevState.todo.length;
+                const currentLength = this.state.todo.length;
     
-                if(prevState.todo.length && prevTask.id !== currentTask.id){
-                    firebase.database().ref('todo').set(this.state.todo);    
+                if( prevLength && prevTask.id !== currentTask.id && prevLength < currentLength ){
+
+                    firebase.database()
+                    .ref('todo')
+                    .set(this.state.todo, error => errorCatcher(error,'New item add'));    
                 }
         }
 
