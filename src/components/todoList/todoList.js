@@ -1,30 +1,55 @@
-import React from 'react';
-import TodoItem from '../todoItem';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import './todoList.css';
+import TodoItem from '../todoItem'
 
-const TodoList = ({todo, onDeleted, addToDone, addToImportant}) => {
+import './todoList.css'
 
-    if(!todo.length) return null;
+const TodoList = ({ todo, onDeleted, addToDone, addToImportant }) => {
+  if (!todo.length) return null
 
-    return (
-        <ul className="list-group container-fluid">
-            {todo.map(({name,id, important, done}) => {
-                return (
-                    <TodoItem 
-                        key = {id} 
-                        name={name}
-                        important={important}
-                        done={done}
-                        delItem={() => onDeleted(id)}
-                        addToDone={() => addToDone(id)}
-                        addToImportant={() => addToImportant(id)}
-                    />
-                )
-             })
-            }
-        </ul>
-    );
-};
+  return (
+    <ul className="list-group container-fluid">
+      {todo.map(({ name, id, important, done }) => {
+        return (
+          <TodoItem
+            key={id}
+            name={name}
+            important={important}
+            done={done}
+            delItem={() => onDeleted(id)}
+            addToDone={() => addToDone(id)}
+            addToImportant={() => addToImportant(id)}
+          />
+        )
+      })}
+    </ul>
+  )
+}
 
-export default TodoList;
+TodoList.propTypes = {
+  todo: PropTypes.arrayOf(
+    PropTypes.shape({
+      done: PropTypes.bool,
+      hide: PropTypes.bool,
+      important: PropTypes.bool,
+      id: PropTypes.number.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
+  onDeleted: PropTypes.func.isRequired,
+  addToDone: PropTypes.func.isRequired,
+  addToImportant: PropTypes.func.isRequired,
+}
+
+TodoList.defaultProps = {
+  todo: PropTypes.arrayOf(
+    PropTypes.shape({
+      done: false,
+      hide: false,
+      important: false,
+    })
+  ),
+}
+
+export default TodoList
