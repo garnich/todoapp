@@ -1,0 +1,12 @@
+header {
+    background: blueviolet;
+}
+header a {
+    color: #fff;
+    text-decoration: none;
+}
+header a:hover {
+    color: yellow;
+    text-decoration: none;
+}
+

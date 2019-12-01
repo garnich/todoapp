@@ -1,3 +1,6 @@
+html{
+    font-size: 16px;
+}
 .title {
     color: tomato;
 }
@@ -7,4 +10,7 @@
 nav > ul > li {
     display: inline;
     padding-right: 10px;
+}
+main {
+    margin-bottom: 2rem;
 }
