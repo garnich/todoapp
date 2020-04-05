@@ -10,6 +10,7 @@ import ItemStatusFilter from './components/itemStatusFilter'
 import TodoList from './components/todoList'
 import NewItem from './components/newItem'
 import Loader from './components/loader'
+import AuthorizationForm from './components/authorizationForm'
 import firebase, { errorCatcher } from './Firebase'
 
 import './css/main.css'
@@ -18,6 +19,7 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
+      uid: '',
       todo: [],
       search: '',
       filter: 'all',
@@ -122,6 +124,10 @@ class App extends Component {
     this.onFilterChange = filter => {
       this.setState({ filter })
     }
+
+    this.onAuthChange = uid => {
+      this.setState({ uid })
+    }
   }
 
   componentDidMount() {
@@ -155,7 +161,7 @@ class App extends Component {
   }
 
   render() {
-    const { todo, search, filter } = this.state
+    const { uid, todo, search, filter } = this.state
     const done = todo.filter(item => item.done === false)
 
     const todoFiltered = this.filterParam(
@@ -177,12 +183,10 @@ class App extends Component {
               <Route exact path="/">
                 <h1>Home Page</h1>
               </Route>
-              <Route path="/login">
-                <h1>Login Page</h1>
-              </Route>
               <Route path="/todo">
-                {!todo.length && <Loader />}
-                {!!todo.length && (
+                {!uid && <AuthorizationForm onAuthChange={this.onAuthChange} />}
+                {uid && !todo.length && <Loader />}
+                {uid && !!todo.length && (
                   <div className="col-8 m-auto">
                     <div>
                       <Title
@@ -213,6 +217,9 @@ class App extends Component {
                     </div>
                   </div>
                 )}
+              </Route>
+              <Route path="/about">
+                <h1>About Page</h1>
               </Route>
             </main>
           </Switch>
