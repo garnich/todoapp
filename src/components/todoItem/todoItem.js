@@ -14,11 +14,14 @@ const TodoItem = props => {
       <span onClick={addToDone} className={classNames}>
         {name}
       </span>
-      <span>
-        <button className="btn btn-outline-success" onClick={addToImportant}>
+      <span className="buttonBlock">
+        <button className="btn btn-outline-success" onClick={addToDone}>
+          <i className="fa fa-check-square-o" />
+        </button>
+        <button className="btn btn-outline-danger" onClick={addToImportant}>
           <i className="fa fa-flag" />
         </button>
-        <button className="btn btn-outline-danger" onClick={delItem}>
+        <button className="btn btn-outline-secondary" onClick={delItem}>
           <i className="fa fa-trash-o" />
         </button>
       </span>

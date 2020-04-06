@@ -1,5 +1,7 @@
 header {
     background: blueviolet;
+    position: relative;
+    height: 100%;
 }
 header a {
     color: #fff;
@@ -8,5 +10,9 @@ header a {
 header a:hover {
     color: yellow;
     text-decoration: none;
+}
+.logout {
+    position: absolute;
+    right: 10px;
 }
 

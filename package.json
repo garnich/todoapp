@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --open --mode development --hot --history-api-fallback",
     "build": "webpack --mode production",
-    "precommit": "lint-staged",    
+    "precommit": "lint-staged",
     "eslint": "node_modules/.bin/eslint src/"
   },
   "author": "Andrei Ihnatsiuk",

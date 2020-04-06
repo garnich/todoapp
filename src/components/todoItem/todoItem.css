@@ -2,7 +2,7 @@ span {
     font-style: italic;
     color: green;
 }
-span:hover{
+.buttonBlock:hover{
     cursor: pointer;
 }
 
@@ -16,14 +16,20 @@ span:hover{
     font-style: normal;
 }
 .fa-trash-o{
-    color:red;
+    color: #6c757d;
 }
-button > .fa-trash-o:hover{
+.buttonBlock>.btn:hover > .fa-trash-o{
     color:#fff;
 }
 .fa-flag{
-    color:green;
+    color:red;
 }
-button > .fa-flag:hover{
+.buttonBlock>.btn:hover > .fa-flag{
+    color:#fff;
+}
+.fa-check-square-o{
+    color: green;
+}
+.buttonBlock>.btn:hover > .fa-check-square-o{
     color:#fff;
 }

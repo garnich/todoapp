@@ -19,40 +19,37 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      uid: '',
+      uid: '', //for dev => 'HC2pcfkRXEdnMCW3aWmiP0x8HbH2'
       todo: [],
       search: '',
       filter: 'all',
-    }
-
-    this.createTodoItem = label => {
-      return {
-        name: label,
-        hide: true,
-        id: new Date().getTime(),
-        important: false,
-        done: false,
-      }
+      loading: true, //for dev => false
     }
 
     this.deleteItem = id => {
       const { todo } = this.state
       const idx = this.state.todo.findIndex(el => el.id === id)
+      const newData = [...todo.slice(0, idx), ...todo.slice(idx + 1)]
 
       this.setState({
-        todo: [...todo.slice(0, idx), ...todo.slice(idx + 1)],
+        todo: newData,
       })
 
-      this.deleteItemInFireBase(idx, 'Item REMOVED')
+      this.deleteItemInFireBase(newData, 'Item REMOVED')
     }
 
-    this.deleteItemInFireBase = (itemIndex, msg) => {
+    this.deleteItemInFireBase = (data, msg) => {
+      const { uid } = this.state
+
       firebase
         .database()
-        .ref(`todo/${itemIndex}`)
+        .ref(`${uid}/todo`)
         .remove()
-        .then(() => errorCatcher(false, msg))
-        .catch(error => errorCatcher(error, ''))
+
+      firebase
+        .database()
+        .ref(`${uid}/todo`)
+        .set(data, error => errorCatcher(error, msg))
     }
 
     this.addToDone = id => {
@@ -81,9 +78,11 @@ class App extends Component {
     }
 
     this.updateItemInFireBase = (itemIndex, newItemData, msg) => {
+      const { uid } = this.state
+
       firebase
         .database()
-        .ref(`todo/${itemIndex}`)
+        .ref(`${uid}/todo/${itemIndex}`)
         .update(newItemData, error => errorCatcher(error, msg))
     }
 
@@ -110,15 +109,17 @@ class App extends Component {
     }
 
     this.filterParam = (items, filter) => {
-      switch (filter) {
-        case 'all':
-          return items
-        case 'todo':
-          return items.filter(item => !item.done)
-        case 'done':
-          return items.filter(item => item.done)
-        default:
-          return items
+      if (items) {
+        switch (filter) {
+          case 'all':
+            return items
+          case 'todo':
+            return items.filter(item => !item.done)
+          case 'done':
+            return items.filter(item => item.done)
+          default:
+            return items
+        }
       }
     }
     this.onFilterChange = filter => {
@@ -127,41 +128,40 @@ class App extends Component {
 
     this.onAuthChange = uid => {
       this.setState({ uid })
+
+      const ref = firebase.database().ref(`${uid}/todo`)
+
+      ref.on('value', snapshot => {
+        const ToDo = snapshot.val()
+
+        this.setState({
+          todo: ToDo || [],
+          loading: false,
+        }),
+          error => errorCatcher(error, 'Connection to DataBase')
+      })
+    }
+
+    this.logout = () => {
+      this.setState({ uid: '' })
     }
   }
 
-  componentDidMount() {
-    const ref = firebase.database().ref('todo')
-
-    ref.on('value', snapshot => {
-      const ToDo = snapshot.val()
-      this.setState({
-        todo: ToDo,
-      }),
-        error => errorCatcher(error, 'Connection to DataBase')
-    })
-  }
-
   componentDidUpdate(prevProps, prevState) {
-    const prevTask = prevState.todo[prevState.todo.length - 1]
-    const currentTask = this.state.todo[this.state.todo.length - 1]
     const prevLength = prevState.todo.length
     const currentLength = this.state.todo.length
+    const { uid } = this.state
 
-    if (
-      prevLength &&
-      prevTask.id !== currentTask.id &&
-      prevLength < currentLength
-    ) {
+    if (prevLength < currentLength) {
       firebase
         .database()
-        .ref('todo')
+        .ref(`${uid}/todo`)
         .set(this.state.todo, error => errorCatcher(error, 'New item add'))
     }
   }
 
   render() {
-    const { uid, todo, search, filter } = this.state
+    const { uid, todo, search, filter, loading } = this.state
     const done = todo.filter(item => item.done === false)
 
     const todoFiltered = this.filterParam(
@@ -177,7 +177,7 @@ class App extends Component {
     return (
       <Fragment>
         <Router>
-          <Header />
+          <Header auth={uid} logout={this.logout} />
           <Switch>
             <main>
               <Route exact path="/">
@@ -185,8 +185,8 @@ class App extends Component {
               </Route>
               <Route path="/todo">
                 {!uid && <AuthorizationForm onAuthChange={this.onAuthChange} />}
-                {uid && !todo.length && <Loader />}
-                {uid && !!todo.length && (
+                {uid && loading && <Loader />}
+                {uid && !loading && (
                   <div className="col-8 m-auto">
                     <div>
                       <Title
