@@ -23,7 +23,6 @@ class AuthorizationForm extends Component {
   }
 
   handleInputChange(event) {
-    console.log(event.target.id)
     switch (event.target.id) {
       case 'email1':
         this.setState({ singInEmail: event.target.value })
@@ -105,7 +104,11 @@ class AuthorizationForm extends Component {
           this.setState({ error })
         })
     } else {
-      console.log('PASSWORSD MUST BE SAME')
+      this.setState({
+        singUpPassword1: '',
+        singUpPassword2: '',
+        error: { message: 'Passwords must be same' },
+      })
     }
   }
 
@@ -142,6 +145,7 @@ class AuthorizationForm extends Component {
                 id="email1"
                 value={singInEmail}
                 onChange={this.handleInputChange}
+                placeholder="Email"
               />
             </div>
             <div className="form-group">
@@ -153,6 +157,7 @@ class AuthorizationForm extends Component {
                 id="pwd"
                 value={singInPassword}
                 onChange={this.handleInputChange}
+                placeholder="Password"
               />
             </div>
             <button type="submit" className="btn btn-primary">
@@ -178,6 +183,7 @@ class AuthorizationForm extends Component {
                 name="email2"
                 value={singUpEmail}
                 onChange={this.handleInputChange}
+                placeholder="Email"
               />
             </div>
             <div className="form-group">
@@ -189,6 +195,7 @@ class AuthorizationForm extends Component {
                 id="pwd1"
                 value={singUpPassword1}
                 onChange={this.handleInputChange}
+                placeholder="Password"
               />
             </div>
             <div className="form-group">
@@ -200,6 +207,7 @@ class AuthorizationForm extends Component {
                 id="pwd2"
                 value={singUpPassword2}
                 onChange={this.handleInputChange}
+                placeholder="Repeat password"
               />
             </div>
             <button type="submit" className="btn btn-primary">
