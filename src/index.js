@@ -10,6 +10,7 @@ import ItemStatusFilter from './components/itemStatusFilter'
 import TodoList from './components/todoList'
 import NewItem from './components/newItem'
 import Loader from './components/loader'
+import ErrorBoundary from './components/errorBoundary'
 import AuthorizationForm from './components/authorizationForm'
 import firebase, { errorCatcher } from './Firebase'
 
@@ -184,39 +185,43 @@ class App extends Component {
                 <h1>Home Page</h1>
               </Route>
               <Route path="/todo">
-                {!uid && <AuthorizationForm onAuthChange={this.onAuthChange} />}
-                {uid && loading && <Loader />}
-                {uid && !loading && (
-                  <div className="col-8 m-auto">
-                    <div>
-                      <Title
-                        done={todo.length - done.length}
-                        todo={done.length}
-                      />
-                      <div className="top-panel d-flex">
-                        <FormControl
-                          placeholder="search"
-                          searchParam={this.searchParam}
+                <ErrorBoundary>
+                  {!uid && (
+                    <AuthorizationForm onAuthChange={this.onAuthChange} />
+                  )}
+                  {uid && loading && <Loader />}
+                  {uid && !loading && (
+                    <div className="col-8 m-auto">
+                      <div>
+                        <Title
+                          done={todo.length - done.length}
+                          todo={done.length}
                         />
-                        <ItemStatusFilter
-                          filter={filter}
-                          onFilterChange={this.onFilterChange}
-                        />
+                        <div className="top-panel d-flex">
+                          <FormControl
+                            placeholder="search"
+                            searchParam={this.searchParam}
+                          />
+                          <ItemStatusFilter
+                            filter={filter}
+                            onFilterChange={this.onFilterChange}
+                          />
+                        </div>
+                        {todoFiltered.length ? (
+                          <TodoList
+                            todo={todoFiltered}
+                            onDeleted={this.deleteItem}
+                            addToDone={this.addToDone}
+                            addToImportant={this.addToImportant}
+                          />
+                        ) : (
+                          <h2 className="ml-3">Just relax)))</h2>
+                        )}
+                        <NewItem addNewItem={this.addNewItem} />
                       </div>
-                      {todoFiltered.length ? (
-                        <TodoList
-                          todo={todoFiltered}
-                          onDeleted={this.deleteItem}
-                          addToDone={this.addToDone}
-                          addToImportant={this.addToImportant}
-                        />
-                      ) : (
-                        <h2 className="ml-3">Just relax)))</h2>
-                      )}
-                      <NewItem addNewItem={this.addNewItem} />
                     </div>
-                  </div>
-                )}
+                  )}
+                </ErrorBoundary>
               </Route>
               <Route path="/about">
                 <h1>About Page</h1>

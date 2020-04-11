@@ -7,12 +7,42 @@ class AuthorizationForm extends Component {
     super(props)
 
     this.state = {
+      singInEmail: '',
+      singInPassword: '',
+      singUpEmail: '',
+      singUpPassword1: '',
+      singUpPassword2: '',
       emailNotVerified: true,
       createUserWithEmailAndPassword: false,
+      error: null,
     }
 
+    this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSignIn = this.handleSignIn.bind(this)
     this.handleSignUp = this.handleSignUp.bind(this)
+  }
+
+  handleInputChange(event) {
+    console.log(event.target.id)
+    switch (event.target.id) {
+      case 'email1':
+        this.setState({ singInEmail: event.target.value })
+        break
+      case 'pwd':
+        this.setState({ singInPassword: event.target.value })
+        break
+      case 'email2':
+        this.setState({ singUpEmail: event.target.value })
+        break
+      case 'pwd1':
+        this.setState({ singUpPassword1: event.target.value })
+        break
+      case 'pwd2':
+        this.setState({ singUpPassword2: event.target.value })
+        break
+      default:
+        break
+    }
   }
 
   handleSignIn(event) {
@@ -42,8 +72,12 @@ class AuthorizationForm extends Component {
           this.setState({ emailNotVerified: false })
         }
       })
-      .catch(function(error) {
-        console.log('ERROR', error.message)
+      .catch(error => {
+        this.setState({
+          singInEmail: '',
+          singInPassword: '',
+          error,
+        })
       })
   }
 
@@ -67,8 +101,8 @@ class AuthorizationForm extends Component {
             this.setState({ createUserWithEmailAndPassword: true })
           }
         })
-        .catch(function(error) {
-          console.log(error.message, 7000)
+        .catch(error => {
+          this.setState({ error })
         })
     } else {
       console.log('PASSWORSD MUST BE SAME')
@@ -76,74 +110,106 @@ class AuthorizationForm extends Component {
   }
 
   render() {
-    const { emailNotVerified, createUserWithEmailAndPassword } = this.state
+    const {
+      singInEmail,
+      singInPassword,
+      singUpEmail,
+      singUpPassword1,
+      singUpPassword2,
+      emailNotVerified,
+      createUserWithEmailAndPassword,
+      error,
+    } = this.state
 
     return (
-      <div className="authWrapper">
-        <form role="form" className="col-3 m-auto" onSubmit={this.handleSignIn}>
-          <h2 className="title">SignIn</h2>
-          <div className="form-group">
-            <label htmlFor="email1">Email address:</label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              id="email1"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="pwd">Password:</label>
-            <input
-              type="password"
-              className="form-control"
-              name="pwd"
-              id="pwd"
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-          {!emailNotVerified && (
-            <p className="alert alert-warning">Please check your email!</p>
-          )}
-        </form>
+      <div className="errorWrapper">
+        {error && (
+          <p className="alert alert-danger loginError">{error.message}</p>
+        )}
+        <div className="authWrapper">
+          <form
+            role="form"
+            className="col-3 m-auto"
+            onSubmit={this.handleSignIn}
+          >
+            <h2 className="title">SignIn</h2>
+            <div className="form-group">
+              <label htmlFor="email1">Email address:</label>
+              <input
+                type="email"
+                className="form-control"
+                name="email"
+                id="email1"
+                value={singInEmail}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="pwd">Password:</label>
+              <input
+                type="password"
+                className="form-control"
+                name="pwd"
+                id="pwd"
+                value={singInPassword}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+            {!emailNotVerified && (
+              <p className="alert alert-warning">Please check your email!</p>
+            )}
+          </form>
 
-        <form role="form" className="col-3 m-auto" onSubmit={this.handleSignUp}>
-          <h2 className="title">SignUp</h2>
-          <div className="form-group">
-            <label htmlFor="email2">Email address:</label>
-            <input
-              type="email"
-              className="form-control"
-              id="email2"
-              name="email2"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="pwd1">Password:</label>
-            <input
-              type="password"
-              className="form-control"
-              name="pwd1"
-              id="pwd1"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="pwd2">Confirm password:</label>
-            <input
-              type="password"
-              className="form-control"
-              name="pwd2"
-              id="pwd2"
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-          {createUserWithEmailAndPassword && (
-            <p className="alert alert-warning">Please check your email!</p>
-          )}
-        </form>
+          <form
+            role="form"
+            className="col-3 m-auto"
+            onSubmit={this.handleSignUp}
+          >
+            <h2 className="title">SignUp</h2>
+            <div className="form-group">
+              <label htmlFor="email2">Email address:</label>
+              <input
+                type="email"
+                className="form-control"
+                id="email2"
+                name="email2"
+                value={singUpEmail}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="pwd1">Password:</label>
+              <input
+                type="password"
+                className="form-control"
+                name="pwd1"
+                id="pwd1"
+                value={singUpPassword1}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="pwd2">Confirm password:</label>
+              <input
+                type="password"
+                className="form-control"
+                name="pwd2"
+                id="pwd2"
+                value={singUpPassword2}
+                onChange={this.handleInputChange}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary">
+              Submit
+            </button>
+            {createUserWithEmailAndPassword && (
+              <p className="alert alert-warning">Please check your email!</p>
+            )}
+          </form>
+        </div>
       </div>
     )
   }
