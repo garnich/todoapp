@@ -6,6 +6,11 @@ class AuthorizationForm extends Component {
   constructor(props) {
     super(props)
 
+    this.state = {
+      emailNotVerified: true,
+      createUserWithEmailAndPassword: false,
+    }
+
     this.handleSignIn = this.handleSignIn.bind(this)
     this.handleSignUp = this.handleSignUp.bind(this)
   }
@@ -23,10 +28,20 @@ class AuthorizationForm extends Component {
         var user = auth.currentUser
 
         if (user !== null) {
-          return user.uid
+          if (user.emailVerified) {
+            return user.uid
+          } else {
+            return false
+          }
         }
       })
-      .then(data => this.props.onAuthChange(data))
+      .then(data => {
+        if (data) {
+          this.props.onAuthChange(data)
+        } else {
+          this.setState({ emailNotVerified: false })
+        }
+      })
       .catch(function(error) {
         console.log('ERROR', error.message)
       })
@@ -45,6 +60,12 @@ class AuthorizationForm extends Component {
         .then(function() {
           auth.currentUser.sendEmailVerification()
           console.log('createUserWithEmailAndPassword', true)
+          return true
+        })
+        .then(data => {
+          if (data) {
+            this.setState({ createUserWithEmailAndPassword: true })
+          }
         })
         .catch(function(error) {
           console.log(error.message, 7000)
@@ -55,6 +76,8 @@ class AuthorizationForm extends Component {
   }
 
   render() {
+    const { emailNotVerified, createUserWithEmailAndPassword } = this.state
+
     return (
       <div className="authWrapper">
         <form role="form" className="col-3 m-auto" onSubmit={this.handleSignIn}>
@@ -80,6 +103,9 @@ class AuthorizationForm extends Component {
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
+          {!emailNotVerified && (
+            <p className="alert alert-warning">Please check your email!</p>
+          )}
         </form>
 
         <form role="form" className="col-3 m-auto" onSubmit={this.handleSignUp}>
@@ -114,6 +140,9 @@ class AuthorizationForm extends Component {
           <button type="submit" className="btn btn-primary">
             Submit
           </button>
+          {createUserWithEmailAndPassword && (
+            <p className="alert alert-warning">Please check your email!</p>
+          )}
         </form>
       </div>
     )

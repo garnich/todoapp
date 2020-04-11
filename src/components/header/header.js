@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom'
 
 import './header.css'
 
-const Header = () => {
+const Header = props => {
+  const { auth, logout } = props
+
   return (
     <header className="d-flex justify-content-center ">
       <nav>
@@ -19,6 +21,11 @@ const Header = () => {
           </li>
         </ul>
       </nav>
+      {auth && (
+        <button className="btn btn-secondary logout" onClick={() => logout()}>
+          Logout
+        </button>
+      )}
     </header>
   )
 }
