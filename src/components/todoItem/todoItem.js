@@ -15,10 +15,18 @@ const TodoItem = props => {
         {name}
       </span>
       <span className="buttonBlock">
-        <button className="btn btn-outline-success" onClick={addToDone}>
+        <button
+          className={`btn btn-outline-success ${done ? 'selectedDone' : ''}`}
+          onClick={addToDone}
+        >
           <i className="fa fa-check-square-o" />
         </button>
-        <button className="btn btn-outline-danger" onClick={addToImportant}>
+        <button
+          className={`btn btn-outline-danger ${
+            important ? 'selectedImportant' : ''
+          }`}
+          onClick={addToImportant}
+        >
           <i className="fa fa-flag" />
         </button>
         <button className="btn btn-outline-secondary" onClick={delItem}>

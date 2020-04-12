@@ -4,9 +4,18 @@ span {
     font-style: italic;
     color: $col5;
 }
-.buttonBlock:hover{
-    cursor: pointer;
+.buttonBlock {
+    &:hover {
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        & > .fa-flag, > .fa-trash-o, > .fa-check-square-o {
+            color: $col2;
+        }
+    }
 }
+
 
 .done{
     text-decoration: line-through;
@@ -17,21 +26,30 @@ span {
     color: $col1;
     font-style: normal;
 }
+
 .fa-trash-o{
     color: $col3;
-}
-.buttonBlock >.btn:hover > .fa-trash-o{
-    color: $col2;
 }
 .fa-flag{
     color: $col4;
 }
-.buttonBlock >.btn:hover > .fa-flag{
-    color: $col2;
-}
+
 .fa-check-square-o{
     color: $col5;
 }
-.buttonBlock>.btn:hover > .fa-check-square-o{
-    color: $col2;
+
+.btn.selectedDone {
+    background-color: $col5;
+
+    .fa-check-square-o{
+        color: $col2;
+    }
+}
+
+.btn.selectedImportant {
+    background-color: $col4;
+
+    .fa-flag{
+        color: $col2;
+    }
 }

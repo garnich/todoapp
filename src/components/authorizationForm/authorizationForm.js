@@ -32,8 +32,8 @@ class AuthorizationForm extends Component {
   handleSignIn(event) {
     event.preventDefault()
     const data = new FormData(event.target)
-    const email = data.get('email')
-    const password = data.get('pwd')
+    const email = data.get('singInEmail')
+    const password = data.get('singInPassword')
 
     auth
       .signInWithEmailAndPassword(email, password)
@@ -68,9 +68,9 @@ class AuthorizationForm extends Component {
   handleSignUp(event) {
     event.preventDefault()
     const data = new FormData(event.target)
-    const email = data.get('email2')
-    const password1 = data.get('pwd1')
-    const password2 = data.get('pwd2')
+    const email = data.get('singUpEmail')
+    const password1 = data.get('singUpPassword1')
+    const password2 = data.get('singUpPassword2')
 
     if (password1 === password2) {
       auth
@@ -131,6 +131,7 @@ class AuthorizationForm extends Component {
                 value={singInEmail}
                 onChange={this.handleInputChange}
                 placeholder="Email"
+                required
               />
             </div>
             <div className="form-group">
@@ -143,6 +144,7 @@ class AuthorizationForm extends Component {
                 value={singInPassword}
                 onChange={this.handleInputChange}
                 placeholder="Password"
+                required
               />
             </div>
             <button type="submit" className="btn btn-primary">
@@ -169,6 +171,7 @@ class AuthorizationForm extends Component {
                 value={singUpEmail}
                 onChange={this.handleInputChange}
                 placeholder="Email"
+                required
               />
             </div>
             <div className="form-group">
@@ -181,6 +184,7 @@ class AuthorizationForm extends Component {
                 value={singUpPassword1}
                 onChange={this.handleInputChange}
                 placeholder="Password"
+                required
               />
             </div>
             <div className="form-group">
@@ -193,6 +197,7 @@ class AuthorizationForm extends Component {
                 value={singUpPassword2}
                 onChange={this.handleInputChange}
                 placeholder="Repeat password"
+                required
               />
             </div>
             <button type="submit" className="btn btn-primary">
