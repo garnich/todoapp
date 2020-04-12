@@ -1,5 +1,7 @@
 @import './variables.scss';
 
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i,700,700i&display=swap&subset=cyrillic');
+
 html{
     font-size: 16px;
 }
@@ -18,5 +20,7 @@ nav {
     }     
 }
 main {
-    margin-bottom: 2rem;
+    height: calc(100vh - 40px);
+    background-color: $col8;
+    font-family: Roboto;
 }

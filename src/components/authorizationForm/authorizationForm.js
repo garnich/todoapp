@@ -111,13 +111,16 @@ class AuthorizationForm extends Component {
 
     return (
       <div className="errorWrapper">
-        {error && (
-          <p className="alert alert-danger loginError">{error.message}</p>
-        )}
+        <div className="loginErrorWrapper">
+          {error && (
+            <p className="alert alert-danger loginError">{error.message}</p>
+          )}
+        </div>
         <div className="authWrapper">
           <form
+            autoComplete="off"
             role="form"
-            className="col-3 m-auto"
+            className="col-3"
             onSubmit={this.handleSignIn}
           >
             <h2 className="title">SignIn</h2>
@@ -147,7 +150,7 @@ class AuthorizationForm extends Component {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-outline-secondary">
               Submit
             </button>
             {!emailNotVerified && (
@@ -156,8 +159,9 @@ class AuthorizationForm extends Component {
           </form>
 
           <form
+            autoComplete="off"
             role="form"
-            className="col-3 m-auto"
+            className="col-3"
             onSubmit={this.handleSignUp}
           >
             <h2 className="title">SignUp</h2>
@@ -200,7 +204,7 @@ class AuthorizationForm extends Component {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-outline-secondary">
               Submit
             </button>
             {createUserWithEmailAndPassword && (

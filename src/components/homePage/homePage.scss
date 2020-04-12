@@ -1,0 +1,17 @@
+@import '../../scss/variables.scss';
+
+.home_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+
+    .reactIcons {
+        font-size: 2em;
+
+        svg{
+            padding-right: 0.25em;
+        }
+    }
+}

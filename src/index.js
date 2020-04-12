@@ -3,6 +3,8 @@ import ReactDom from 'react-dom'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Header from './components/header'
+import HomePage from './components/homePage'
+import AboutPage from './components/aboutPage'
 import Footer from './components/footer'
 import Title from './components/title'
 import FormControl from './components/formControl'
@@ -180,53 +182,55 @@ class App extends Component {
         <Router>
           <Header auth={uid} logout={this.logout} />
           <Switch>
-            <main>
-              <Route exact path="/">
-                <h1>Home Page</h1>
-              </Route>
-              <Route path="/todo">
-                <ErrorBoundary>
-                  {!uid && (
-                    <AuthorizationForm onAuthChange={this.onAuthChange} />
-                  )}
-                  {uid && loading && <Loader />}
-                  {uid && !loading && (
-                    <div className="col-8 m-auto">
-                      <div>
-                        <Title
-                          done={todo.length - done.length}
-                          todo={done.length}
-                        />
-                        <div className="top-panel d-flex">
-                          <FormControl
-                            placeholder="search"
-                            searchParam={this.searchParam}
+            <Fragment>
+              <main>
+                <Route exact path="/">
+                  <HomePage />
+                </Route>
+                <Route path="/todo">
+                  <ErrorBoundary>
+                    {!uid && (
+                      <AuthorizationForm onAuthChange={this.onAuthChange} />
+                    )}
+                    {uid && loading && <Loader />}
+                    {uid && !loading && (
+                      <div className="col-8 m-auto">
+                        <div>
+                          <Title
+                            done={todo.length - done.length}
+                            todo={done.length}
                           />
-                          <ItemStatusFilter
-                            filter={filter}
-                            onFilterChange={this.onFilterChange}
-                          />
+                          <div className="top-panel d-flex">
+                            <FormControl
+                              placeholder="search"
+                              searchParam={this.searchParam}
+                            />
+                            <ItemStatusFilter
+                              filter={filter}
+                              onFilterChange={this.onFilterChange}
+                            />
+                          </div>
+                          {todoFiltered.length ? (
+                            <TodoList
+                              todo={todoFiltered}
+                              onDeleted={this.deleteItem}
+                              addToDone={this.addToDone}
+                              addToImportant={this.addToImportant}
+                            />
+                          ) : (
+                            <h2 className="ml-3">Just relax)))</h2>
+                          )}
+                          <NewItem addNewItem={this.addNewItem} />
                         </div>
-                        {todoFiltered.length ? (
-                          <TodoList
-                            todo={todoFiltered}
-                            onDeleted={this.deleteItem}
-                            addToDone={this.addToDone}
-                            addToImportant={this.addToImportant}
-                          />
-                        ) : (
-                          <h2 className="ml-3">Just relax)))</h2>
-                        )}
-                        <NewItem addNewItem={this.addNewItem} />
                       </div>
-                    </div>
-                  )}
-                </ErrorBoundary>
-              </Route>
-              <Route path="/about">
-                <h1>About Page</h1>
-              </Route>
-            </main>
+                    )}
+                  </ErrorBoundary>
+                </Route>
+                <Route path="/about">
+                  <AboutPage />
+                </Route>
+              </main>
+            </Fragment>
           </Switch>
         </Router>
         <Footer />

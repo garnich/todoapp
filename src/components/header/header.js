@@ -7,7 +7,7 @@ const Header = props => {
   const { auth, logout } = props
 
   return (
-    <header className="d-flex justify-content-center ">
+    <header className="d-flex justify-content-left ">
       <nav>
         <ul className="mb-0 py-2">
           <li>
