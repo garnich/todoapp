@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './todoItem.css'
+import './todoItem.scss'
 
 const TodoItem = props => {
   const { name, delItem, addToDone, addToImportant, done, important } = props
@@ -14,11 +14,22 @@ const TodoItem = props => {
       <span onClick={addToDone} className={classNames}>
         {name}
       </span>
-      <span>
-        <button className="btn btn-outline-success" onClick={addToImportant}>
+      <span className="buttonBlock">
+        <button
+          className={`btn btn-outline-success ${done ? 'selectedDone' : ''}`}
+          onClick={addToDone}
+        >
+          <i className="fa fa-check-square-o" />
+        </button>
+        <button
+          className={`btn btn-outline-danger ${
+            important ? 'selectedImportant' : ''
+          }`}
+          onClick={addToImportant}
+        >
           <i className="fa fa-flag" />
         </button>
-        <button className="btn btn-outline-danger" onClick={delItem}>
+        <button className="btn btn-outline-secondary" onClick={delItem}>
           <i className="fa fa-trash-o" />
         </button>
       </span>

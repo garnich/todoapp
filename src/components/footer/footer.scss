@@ -1,0 +1,9 @@
+@import '../../scss/variables.scss';
+
+footer {
+    background: $col6;
+    color: $col2;
+    height: 2rem;
+    display: flex;
+    justify-content: center;
+}

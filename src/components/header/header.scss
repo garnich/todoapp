@@ -1,0 +1,20 @@
+@import '../../scss/variables.scss';
+
+header {
+    background: $col6;
+    position: relative;
+    height: 100%;
+}
+header a {
+    color: $col2;
+    text-decoration: none;
+}
+header a:hover {
+    color: $col7;
+    text-decoration: none;
+}
+.logout {
+    position: absolute;
+    right: 10px;
+}
+

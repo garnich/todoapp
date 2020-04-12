@@ -1,0 +1,22 @@
+@import './variables.scss';
+
+html{
+    font-size: 16px;
+}
+.title {
+    color: $col1;
+}
+.top-panel {
+    margin-bottom: 10px;
+}
+nav {
+    & > ul{
+        & > li {
+            display: inline;
+    padding-right: 10px;
+        }
+    }     
+}
+main {
+    margin-bottom: 2rem;
+}

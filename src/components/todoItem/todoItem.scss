@@ -1,0 +1,55 @@
+@import '../../scss/variables.scss';
+
+span {
+    font-style: italic;
+    color: $col5;
+}
+.buttonBlock {
+    &:hover {
+        cursor: pointer;
+    }
+
+    .btn:hover {
+        & > .fa-flag, > .fa-trash-o, > .fa-check-square-o {
+            color: $col2;
+        }
+    }
+}
+
+
+.done{
+    text-decoration: line-through;
+}
+
+.important{
+    font-weight: bold;
+    color: $col1;
+    font-style: normal;
+}
+
+.fa-trash-o{
+    color: $col3;
+}
+.fa-flag{
+    color: $col4;
+}
+
+.fa-check-square-o{
+    color: $col5;
+}
+
+.btn.selectedDone {
+    background-color: $col5;
+
+    .fa-check-square-o{
+        color: $col2;
+    }
+}
+
+.btn.selectedImportant {
+    background-color: $col4;
+
+    .fa-flag{
+        color: $col2;
+    }
+}

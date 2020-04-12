@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './itemStatusFlter.css'
+import './itemStatusFlter.scss'
 
 export default class ItemStatusFilter extends Component {
   render() {
