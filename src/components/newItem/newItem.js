@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './newItem.css'
+import './newItem.scss'
 
 export default class NewItem extends Component {
   constructor() {

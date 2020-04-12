@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 
 import TodoItem from '../todoItem'
 
-import './todoList.css'
+import './todoList.scss'
 
 const TodoList = ({ todo, onDeleted, addToDone, addToImportant }) => {
   if (!todo.length) return null

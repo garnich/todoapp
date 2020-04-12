@@ -1,6 +1,8 @@
+@import '../../scss/variables.scss';
+
 span {
     font-style: italic;
-    color: green;
+    color: $col5;
 }
 .buttonBlock:hover{
     cursor: pointer;
@@ -12,24 +14,24 @@ span {
 
 .important{
     font-weight: bold;
-    color: tomato;
+    color: $col1;
     font-style: normal;
 }
 .fa-trash-o{
-    color: #6c757d;
+    color: $col3;
 }
-.buttonBlock>.btn:hover > .fa-trash-o{
-    color:#fff;
+.buttonBlock >.btn:hover > .fa-trash-o{
+    color: $col2;
 }
 .fa-flag{
-    color:red;
+    color: $col4;
 }
-.buttonBlock>.btn:hover > .fa-flag{
-    color:#fff;
+.buttonBlock >.btn:hover > .fa-flag{
+    color: $col2;
 }
 .fa-check-square-o{
-    color: green;
+    color: $col5;
 }
 .buttonBlock>.btn:hover > .fa-check-square-o{
-    color:#fff;
+    color: $col2;
 }

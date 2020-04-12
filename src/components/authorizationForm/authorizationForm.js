@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { auth } from './../../Firebase'
-import './authorizationForm.css'
+import './authorizationForm.scss'
 
 class AuthorizationForm extends Component {
   constructor(props) {
@@ -23,25 +23,10 @@ class AuthorizationForm extends Component {
   }
 
   handleInputChange(event) {
-    switch (event.target.id) {
-      case 'email1':
-        this.setState({ singInEmail: event.target.value })
-        break
-      case 'pwd':
-        this.setState({ singInPassword: event.target.value })
-        break
-      case 'email2':
-        this.setState({ singUpEmail: event.target.value })
-        break
-      case 'pwd1':
-        this.setState({ singUpPassword1: event.target.value })
-        break
-      case 'pwd2':
-        this.setState({ singUpPassword2: event.target.value })
-        break
-      default:
-        break
-    }
+    const name = event.target.name
+    const value = event.target.value
+
+    this.setState({ [name]: value })
   }
 
   handleSignIn(event) {
@@ -141,7 +126,7 @@ class AuthorizationForm extends Component {
               <input
                 type="email"
                 className="form-control"
-                name="email"
+                name="singInEmail"
                 id="email1"
                 value={singInEmail}
                 onChange={this.handleInputChange}
@@ -153,7 +138,7 @@ class AuthorizationForm extends Component {
               <input
                 type="password"
                 className="form-control"
-                name="pwd"
+                name="singInPassword"
                 id="pwd"
                 value={singInPassword}
                 onChange={this.handleInputChange}
@@ -180,7 +165,7 @@ class AuthorizationForm extends Component {
                 type="email"
                 className="form-control"
                 id="email2"
-                name="email2"
+                name="singUpEmail"
                 value={singUpEmail}
                 onChange={this.handleInputChange}
                 placeholder="Email"
@@ -191,7 +176,7 @@ class AuthorizationForm extends Component {
               <input
                 type="password"
                 className="form-control"
-                name="pwd1"
+                name="singUpPassword1"
                 id="pwd1"
                 value={singUpPassword1}
                 onChange={this.handleInputChange}
@@ -203,7 +188,7 @@ class AuthorizationForm extends Component {
               <input
                 type="password"
                 className="form-control"
-                name="pwd2"
+                name="singUpPassword2"
                 id="pwd2"
                 value={singUpPassword2}
                 onChange={this.handleInputChange}

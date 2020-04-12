@@ -14,7 +14,7 @@ import ErrorBoundary from './components/errorBoundary'
 import AuthorizationForm from './components/authorizationForm'
 import firebase, { errorCatcher } from './Firebase'
 
-import './css/main.css'
+import './scss/main.scss'
 
 class App extends Component {
   constructor() {

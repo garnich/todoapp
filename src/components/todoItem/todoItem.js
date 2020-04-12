@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import './todoItem.css'
+import './todoItem.scss'
 
 const TodoItem = props => {
   const { name, delItem, addToDone, addToImportant, done, important } = props

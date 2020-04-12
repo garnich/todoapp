@@ -1,14 +1,16 @@
+@import '../../scss/variables.scss';
+
 header {
-    background: blueviolet;
+    background: $col6;
     position: relative;
     height: 100%;
 }
 header a {
-    color: #fff;
+    color: $col2;
     text-decoration: none;
 }
 header a:hover {
-    color: yellow;
+    color: $col7;
     text-decoration: none;
 }
 .logout {
