@@ -5,13 +5,15 @@ header {
     position: relative;
     height: 100%;    
     font-family: Roboto;
+    padding: 1rem;
 
     a {
         color: $col2;
         text-decoration: none;
 
         &:hover {
-            color: $col7;
+            color: $col2;
+            font-weight: bold;
             text-decoration: none;
         }
     }
@@ -21,3 +23,7 @@ header {
     position: absolute;
     right: 10px;
 }
+
+.active {
+    text-decoration: underline;
+  }
