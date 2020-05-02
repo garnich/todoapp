@@ -23,4 +23,5 @@ main {
     height: calc(100vh - 112px);
     background-color: $col8;
     font-family: Roboto;
+    overflow: auto;
 }

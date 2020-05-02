@@ -7,3 +7,10 @@
     height: 100%;
     flex-direction: column;
 }
+
+.about_page_content{
+    display: flex; 
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+}
