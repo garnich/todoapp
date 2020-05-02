@@ -18,6 +18,7 @@ const TodoItem = props => {
         <button
           className={`btn btn-outline-success ${done ? 'selectedDone' : ''}`}
           onClick={addToDone}
+          title="DONE"
         >
           <i className="fa fa-check-square-o" />
         </button>
@@ -26,10 +27,15 @@ const TodoItem = props => {
             important ? 'selectedImportant' : ''
           }`}
           onClick={addToImportant}
+          title="IMPORTANT"
         >
           <i className="fa fa-flag" />
         </button>
-        <button className="btn btn-outline-secondary" onClick={delItem}>
+        <button
+          className="btn btn-outline-secondary"
+          onClick={delItem}
+          title="REMOVE"
+        >
           <i className="fa fa-trash-o" />
         </button>
       </span>

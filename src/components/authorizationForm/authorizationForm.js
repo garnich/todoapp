@@ -39,8 +39,7 @@ class AuthorizationForm extends Component {
       .signInWithEmailAndPassword(email, password)
       .then(function() {
         console.log('SUCSESS!!!')
-        var user = auth.currentUser
-
+        let user = auth.currentUser
         if (user !== null) {
           if (user.emailVerified) {
             return user.uid
@@ -53,13 +52,18 @@ class AuthorizationForm extends Component {
         if (data) {
           this.props.onAuthChange(data)
         } else {
-          this.setState({ emailNotVerified: false })
+          this.setState({
+            emailNotVerified: false,
+            error: null,
+          })
         }
       })
       .catch(error => {
         this.setState({
           singInEmail: '',
           singInPassword: '',
+          emailNotVerified: true,
+          createUserWithEmailAndPassword: false,
           error,
         })
       })
@@ -77,16 +81,27 @@ class AuthorizationForm extends Component {
         .createUserWithEmailAndPassword(email, password1)
         .then(function() {
           auth.currentUser.sendEmailVerification()
-          console.log('createUserWithEmailAndPassword', true)
+          console.log('createUserWithEmailAndPassword -> SUCSESS!')
           return true
         })
         .then(data => {
           if (data) {
-            this.setState({ createUserWithEmailAndPassword: true })
+            this.setState({
+              singUpEmail: '',
+              singUpPassword1: '',
+              singUpPassword2: '',
+              createUserWithEmailAndPassword: true,
+              error: null,
+            })
           }
         })
         .catch(error => {
-          this.setState({ error })
+          this.setState({
+            singUpEmail: '',
+            singUpPassword1: '',
+            singUpPassword2: '',
+            error,
+          })
         })
     } else {
       this.setState({
@@ -109,15 +124,26 @@ class AuthorizationForm extends Component {
       error,
     } = this.state
 
+    const emailCheckerInfo = (
+      <div className="emailCheckerInfo text-center">
+        <p className="alert alert-warning">Please check your email!</p>
+      </div>
+    )
+
     return (
       <div className="errorWrapper">
-        {error && (
-          <p className="alert alert-danger loginError">{error.message}</p>
-        )}
+        <div className="loginErrorWrapper">
+          {error && (
+            <p className="alert alert-danger text-center">{error.message}</p>
+          )}
+          {(!emailNotVerified || createUserWithEmailAndPassword) &&
+            emailCheckerInfo}
+        </div>
         <div className="authWrapper">
           <form
+            autoComplete="off"
             role="form"
-            className="col-3 m-auto"
+            className="col-3"
             onSubmit={this.handleSignIn}
           >
             <h2 className="title">SignIn</h2>
@@ -147,17 +173,15 @@ class AuthorizationForm extends Component {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-outline-secondary">
               Submit
             </button>
-            {!emailNotVerified && (
-              <p className="alert alert-warning">Please check your email!</p>
-            )}
           </form>
 
           <form
+            autoComplete="off"
             role="form"
-            className="col-3 m-auto"
+            className="col-3"
             onSubmit={this.handleSignUp}
           >
             <h2 className="title">SignUp</h2>
@@ -200,12 +224,9 @@ class AuthorizationForm extends Component {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-outline-secondary">
               Submit
             </button>
-            {createUserWithEmailAndPassword && (
-              <p className="alert alert-warning">Please check your email!</p>
-            )}
           </form>
         </div>
       </div>

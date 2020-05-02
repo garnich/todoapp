@@ -1,9 +1,26 @@
+@import '../../scss/variables.scss';
+
 .authWrapper {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     max-width: 70%;
     margin: 0 auto;
+
+    .title {
+        color: $col2;
+    }
+
+    label {
+      color: $col3;  
+    }
+
+    .form-control {
+        border-color: $col3;
+        background-color: transparent;
+    }
 }
-.loginError {
-    text-align: center;
+
+.loginErrorWrapper {
+    height: 3.75em;
+    width: 100%;
 }

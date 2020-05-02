@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import './header.scss'
 
@@ -7,17 +7,23 @@ const Header = props => {
   const { auth, logout } = props
 
   return (
-    <header className="d-flex justify-content-center ">
+    <header className="d-flex justify-content-left ">
       <nav>
-        <ul className="mb-0 py-2">
+        <ul className="mb-0">
           <li>
-            <Link to="/">Home</Link>
+            <NavLink to="/" exact={true} activeClassName="active">
+              Home
+            </NavLink>
           </li>
           <li>
-            <Link to="/todo">APP</Link>
+            <NavLink to="/todo" activeClassName="active">
+              App
+            </NavLink>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <NavLink to="/about" activeClassName="active">
+              About
+            </NavLink>
           </li>
         </ul>
       </nav>
