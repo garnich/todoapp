@@ -184,10 +184,10 @@ class App extends Component {
           <Switch>
             <Fragment>
               <main>
-                <Route exact path="/">
+                <Route exact path="/app/">
                   <HomePage />
                 </Route>
-                <Route path="/todo">
+                <Route path="/app/todo">
                   <ErrorBoundary>
                     {!uid && (
                       <AuthorizationForm onAuthChange={this.onAuthChange} />
@@ -226,7 +226,7 @@ class App extends Component {
                     )}
                   </ErrorBoundary>
                 </Route>
-                <Route path="/about">
+                <Route path="/app/about">
                   <AboutPage />
                 </Route>
               </main>
