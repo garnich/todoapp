@@ -22,6 +22,7 @@ class AboutPage extends Component {
             <ul>
               For creating SPA used:
               <li>React</li>
+              <li>Firebase</li>
               <li>WebPack</li>
               <li>Express</li>
               <li>Bootstrap</li>

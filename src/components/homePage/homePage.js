@@ -20,7 +20,7 @@ class HomePage extends Component {
       <div className="col-12 home_page">
         <p>{`Hi, today is ${day} of ${month}, ${year} year.`}</p>
         <p>This is one of my app - ToDo.</p>
-        <Link to="/todo">
+        <Link to="/app/todo">
           <button className="btn btn-outline-secondary btn-lg mt-4 mb-4">
             {' '}
             Welcome!{' '}
