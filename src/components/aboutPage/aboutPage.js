@@ -8,9 +8,9 @@ class AboutPage extends Component {
   }
 
   render() {
-    var launchDate = new Date('05/31/2020')
+    var launchDate = new Date('06/26/2020')
     var today = new Date()
-    var timeDiff = Math.abs(launchDate.getTime() - today.getTime())
+    var timeDiff = launchDate.getTime() - today.getTime()
     var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
 
     return (

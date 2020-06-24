@@ -38,4 +38,5 @@ module.exports = {
     maxEntrypointSize: 512000,
     maxAssetSize: 512000,
   },
+  //presets: ['@babel/preset-env', '@babel/preset-react'],
 }
