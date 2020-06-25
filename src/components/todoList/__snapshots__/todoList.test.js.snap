@@ -1,3 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test TodoList component <TodoList> with list item array 1`] = `ShallowWrapper {}`;
+exports[`Test TodoList component <TodoList> with list item array 1`] = `
+<ul
+  className="list-group container-fluid"
+>
+  <TodoItem
+    addToDone={[Function]}
+    addToImportant={[Function]}
+    delItem={[Function]}
+    done={false}
+    important={true}
+    key="1"
+    name="Item_1"
+  />
+  <TodoItem
+    addToDone={[Function]}
+    addToImportant={[Function]}
+    delItem={[Function]}
+    done={true}
+    important={true}
+    key="2"
+    name="Item_2"
+  />
+  <TodoItem
+    addToDone={[Function]}
+    addToImportant={[Function]}
+    delItem={[Function]}
+    done={true}
+    important={false}
+    key="3"
+    name="Item_3"
+  />
+</ul>
+`;

@@ -1,3 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test AboutPage component <AboutPage> 1`] = `ShallowWrapper {}`;
+exports[`Test AboutPage component <AboutPage> 1`] = `
+<div
+  className="col-12 about_page"
+>
+  <h1>
+    About ToDo App
+  </h1>
+  <div
+    className="about_page_content"
+  >
+    <div
+      className="about_page_content_item"
+    >
+      <h2>
+        ToDo App v.1
+      </h2>
+      <ul>
+        For creating SPA used:
+        <li>
+          React
+        </li>
+        <li>
+          Firebase
+        </li>
+        <li>
+          WebPack
+        </li>
+        <li>
+          Express
+        </li>
+        <li>
+          Bootstrap
+        </li>
+        <li>
+          Sass
+        </li>
+        <li>
+          GitHub
+        </li>
+        <li>
+          Herocu (as PaaS)
+        </li>
+      </ul>
+    </div>
+    <div
+      className="about_page_content_item"
+    >
+      <h2>
+        ToDo App v.1.1
+      </h2>
+      <p>
+        1 days to go...
+      </p>
+      <ul>
+        Updates of ToDo App:
+        <li>
+          Implement unit test
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;

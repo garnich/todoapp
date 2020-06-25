@@ -1,3 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test Loader component <Loader> 1`] = `ShallowWrapper {}`;
+exports[`Test Loader component <Loader> 1`] = `
+<div
+  className="loader"
+>
+  <div
+    className="spinner"
+  />
+</div>
+`;

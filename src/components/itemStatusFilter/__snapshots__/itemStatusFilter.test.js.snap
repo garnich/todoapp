@@ -1,3 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Test ItemStatusFilter component <ItemStatusFilter> 1`] = `ShallowWrapper {}`;
+exports[`Test ItemStatusFilter component <ItemStatusFilter> 1`] = `
+<div
+  className="btn-group"
+>
+  <button
+    className="btn btn-info"
+    key="all"
+    onClick={[Function]}
+    type="button"
+  >
+    All
+  </button>
+  <button
+    className="btn btn-outline-secondary"
+    key="todo"
+    onClick={[Function]}
+    type="button"
+  >
+    ToDo
+  </button>
+  <button
+    className="btn btn-outline-secondary"
+    key="done"
+    onClick={[Function]}
+    type="button"
+  >
+    Done
+  </button>
+</div>
+`;
