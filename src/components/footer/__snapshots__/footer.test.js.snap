@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Footer component <Footer> 1`] = `
+<footer
+  className="col-12 page-footer font-small blue fixed-bottom"
+>
+  <p>
+    Minsk 2020
+  </p>
+</footer>
+`;

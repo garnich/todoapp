@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test FormControl component <FormControl> 1`] = `
+<div
+  className="search"
+>
+  <input
+    className="form-control"
+    onChange={[Function]}
+  />
+</div>
+`;

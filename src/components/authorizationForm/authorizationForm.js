@@ -31,31 +31,24 @@ class AuthorizationForm extends Component {
 
   handleSignIn(event) {
     event.preventDefault()
-    const data = new FormData(event.target)
-    const email = data.get('singInEmail')
-    const password = data.get('singInPassword')
+    const form = event.target
+    const email = form[0].value
+    const password = form[1].value
 
     auth
       .signInWithEmailAndPassword(email, password)
-      .then(function() {
+      .then(() => {
         console.log('SUCSESS!!!')
         let user = auth.currentUser
         if (user !== null) {
           if (user.emailVerified) {
-            return user.uid
+            this.props.onAuthChange(user.uid)
           } else {
-            return false
+            this.setState({
+              emailNotVerified: false,
+              error: null,
+            })
           }
-        }
-      })
-      .then(data => {
-        if (data) {
-          this.props.onAuthChange(data)
-        } else {
-          this.setState({
-            emailNotVerified: false,
-            error: null,
-          })
         }
       })
       .catch(error => {
@@ -71,29 +64,24 @@ class AuthorizationForm extends Component {
 
   handleSignUp(event) {
     event.preventDefault()
-    const data = new FormData(event.target)
-    const email = data.get('singUpEmail')
-    const password1 = data.get('singUpPassword1')
-    const password2 = data.get('singUpPassword2')
+    const form = event.target
+    const email = form[0].value
+    const password1 = form[1].value
+    const password2 = form[2].value
 
     if (password1 === password2) {
       auth
         .createUserWithEmailAndPassword(email, password1)
-        .then(function() {
+        .then(() => {
           auth.currentUser.sendEmailVerification()
           console.log('createUserWithEmailAndPassword -> SUCSESS!')
-          return true
-        })
-        .then(data => {
-          if (data) {
-            this.setState({
-              singUpEmail: '',
-              singUpPassword1: '',
-              singUpPassword2: '',
-              createUserWithEmailAndPassword: true,
-              error: null,
-            })
-          }
+          this.setState({
+            singUpEmail: '',
+            singUpPassword1: '',
+            singUpPassword2: '',
+            createUserWithEmailAndPassword: true,
+            error: null,
+          })
         })
         .catch(error => {
           this.setState({

@@ -28,6 +28,18 @@ export default class NewItem extends Component {
         label: '',
       })
     }
+
+    this.onClick = e => {
+      e.preventDefault()
+      if (this.state.label === '') {
+        alert("You can't add EMPTY task!")
+        return null
+      }
+      this.props.addNewItem(this.state.label)
+      this.setState({
+        label: '',
+      })
+    }
   }
 
   render() {
@@ -42,7 +54,7 @@ export default class NewItem extends Component {
         />
         <button
           className="new-item btn btn-outline-secondary"
-          onClick={() => this.props.addNewItem}
+          onClick={this.onClick}
         >
           Add item
         </button>
