@@ -50,9 +50,6 @@ exports[`Test AboutPage component <AboutPage> 1`] = `
       <h2>
         ToDo App v.1.1
       </h2>
-      <p>
-        1 days to go...
-      </p>
       <ul>
         Updates of ToDo App:
         <li>

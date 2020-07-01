@@ -8,11 +8,6 @@ class AboutPage extends Component {
   }
 
   render() {
-    var launchDate = 1593118800000
-    var today = new Date()
-    var timeDiff = launchDate - today.getTime()
-    var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
-
     return (
       <div className="col-12 about_page">
         <h1>About ToDo App</h1>
@@ -33,7 +28,6 @@ class AboutPage extends Component {
           </div>
           <div className="about_page_content_item">
             <h2>ToDo App v.1.1</h2>
-            <p>{`${diffDays} days to go...`}</p>
             <ul>
               Updates of ToDo App:
               <li>Implement unit test</li>
