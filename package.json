@@ -40,6 +40,8 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.10.4",
+    "@babel/runtime": "^7.10.4",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
     "firebase": "^7.14.0",
@@ -71,6 +73,7 @@
       "src/**/*.{js,jsx}",
       "!src/Firebase.js",
       "!src/components/**/index.js",
+      "!src/index.js",
       "!**/node_modules/**"
     ]
   }

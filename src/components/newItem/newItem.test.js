@@ -1,5 +1,5 @@
 import React from 'react'
-import Enzyme, { shallow } from 'enzyme'
+import Enzyme, { shallow, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import NewItem from './newItem'
 
@@ -35,6 +35,35 @@ describe('Test NewItem component', () => {
     wrapper.find('.item-add-form').simulate('submit', { preventDefault() {} })
 
     expect(props.addNewItem).toHaveBeenCalledTimes(1)
+  })
+
+  it('<NewItem> test onClick', () => {
+    const props = {
+      addNewItem: jest.fn(),
+    }
+
+    const wrapper = shallow(<NewItem {...props} />)
+
+    wrapper
+      .find('.form-control')
+      .simulate('change', { target: { value: 'newItem' } })
+    wrapper.find('button').simulate('click', { preventDefault() {} })
+
+    expect(props.addNewItem).toHaveBeenCalledTimes(1)
+  })
+
+  it('<NewItem> test onClick with empty label', () => {
+    jest.spyOn(window, 'alert').mockImplementation(() => {})
+
+    const props = {
+      addNewItem: jest.fn(),
+    }
+
+    const wrapper = shallow(<NewItem {...props} />)
+
+    wrapper.find('button').simulate('click', { preventDefault() {} })
+
+    expect(window.alert).toBeCalledWith("You can't add EMPTY task!")
   })
 
   it('<NewItem> test onSubmit with empty label', () => {

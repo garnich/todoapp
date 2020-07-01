@@ -1,0 +1,146 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test AuthorizationForm component <AuthorizationForm> test snapshot 1`] = `
+<div
+  className="errorWrapper"
+>
+  <div
+    className="loginErrorWrapper"
+  />
+  <div
+    className="authWrapper"
+  >
+    <form
+      autoComplete="off"
+      className="col-3"
+      onSubmit={[Function]}
+      role="form"
+    >
+      <h2
+        className="title"
+      >
+        SignIn
+      </h2>
+      <div
+        className="form-group"
+      >
+        <label
+          htmlFor="email1"
+        >
+          Email address:
+        </label>
+        <input
+          className="form-control"
+          id="email1"
+          name="singInEmail"
+          onChange={[Function]}
+          placeholder="Email"
+          required={true}
+          type="email"
+          value=""
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <label
+          htmlFor="pwd"
+        >
+          Password:
+        </label>
+        <input
+          className="form-control"
+          id="pwd"
+          name="singInPassword"
+          onChange={[Function]}
+          placeholder="Password"
+          required={true}
+          type="password"
+          value=""
+        />
+      </div>
+      <button
+        className="btn btn-outline-secondary"
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+    <form
+      autoComplete="off"
+      className="col-3"
+      onSubmit={[Function]}
+      role="form"
+    >
+      <h2
+        className="title"
+      >
+        SignUp
+      </h2>
+      <div
+        className="form-group"
+      >
+        <label
+          htmlFor="email2"
+        >
+          Email address:
+        </label>
+        <input
+          className="form-control"
+          id="email2"
+          name="singUpEmail"
+          onChange={[Function]}
+          placeholder="Email"
+          required={true}
+          type="email"
+          value=""
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <label
+          htmlFor="pwd1"
+        >
+          Password:
+        </label>
+        <input
+          className="form-control"
+          id="pwd1"
+          name="singUpPassword1"
+          onChange={[Function]}
+          placeholder="Password"
+          required={true}
+          type="password"
+          value=""
+        />
+      </div>
+      <div
+        className="form-group"
+      >
+        <label
+          htmlFor="pwd2"
+        >
+          Confirm password:
+        </label>
+        <input
+          className="form-control"
+          id="pwd2"
+          name="singUpPassword2"
+          onChange={[Function]}
+          placeholder="Repeat password"
+          required={true}
+          type="password"
+          value=""
+        />
+      </div>
+      <button
+        className="btn btn-outline-secondary"
+        type="submit"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+`;
