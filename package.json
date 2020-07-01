@@ -58,6 +58,11 @@
       "git add"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test"
+    }
+  },
   "jest": {
     "verbose": true,
     "moduleNameMapper": {
