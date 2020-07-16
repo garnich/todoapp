@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --open --mode development --hot --history-api-fallback",
-    "build": "webpack --mode production",
+    "build": "webpack-dev-server --hot --open --mode production",
     "precommit": "lint-staged",
     "eslint": "node_modules/.bin/eslint src/",
     "test": "jest",
@@ -50,7 +50,10 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^3.9.0",
-    "react-router-dom": "^5.1.2"
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.1.2",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8"
   },
   "lint-staged": {
     "*.{js, jsx}": [
@@ -78,6 +81,7 @@
       "src/**/*.{js,jsx}",
       "!src/Firebase.js",
       "!src/components/**/index.js",
+      "!src/components/app.js",
       "!src/index.js",
       "!**/node_modules/**"
     ]

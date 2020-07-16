@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { auth } from './../../Firebase'
+import { auth } from '../../services/Firebase'
 import './authorizationForm.scss'
 
 class AuthorizationForm extends Component {
@@ -38,7 +38,6 @@ class AuthorizationForm extends Component {
     auth
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        console.log('SUCSESS!!!')
         let user = auth.currentUser
         if (user !== null) {
           if (user.emailVerified) {
@@ -74,7 +73,7 @@ class AuthorizationForm extends Component {
         .createUserWithEmailAndPassword(email, password1)
         .then(() => {
           auth.currentUser.sendEmailVerification()
-          console.log('createUserWithEmailAndPassword -> SUCSESS!')
+          
           this.setState({
             singUpEmail: '',
             singUpPassword1: '',

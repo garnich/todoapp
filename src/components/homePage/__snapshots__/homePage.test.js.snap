@@ -8,7 +8,11 @@ exports[`Test HomePage component <HomePage> 1`] = `
     Hi, today is 25 of June, 2020 year.
   </p>
   <p>
-    This is one of my app - ToDo.
+    This is one of my app - ToDo
+    <sup>
+      v.1.1
+    </sup>
+    .
   </p>
   <Link
     to="/app/todo"
