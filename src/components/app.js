@@ -28,7 +28,6 @@ import NewItem from './newItem'
 import Loader from './loader'
 import ErrorBoundary from './errorBoundary'
 import AuthorizationForm from './authorizationForm'
-//import firebase, { errorCatcher } from '../services/Firebase'
 
 import '../scss/main.scss'
 
@@ -111,17 +110,6 @@ class App extends Component {
 
       addUid(uid)
       dataRefFirebase(uid, addTodo, 'Connection to DataBase')
-
-      //const ref = firebase.database().ref(`${uid}/todo`)
-
-      //const ref = dataRefFirebase(uid)
-
-      // ref.on('value', snapshot => {
-      //   const ToDo = snapshot.val()
-
-      //   this.props.addTodo(ToDo),
-      //     error => errorCatcher(error, 'Connection to DataBase')
-      // })
     }
 
     this.logout = () => {

@@ -79,9 +79,10 @@
     },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}",
-      "!src/Firebase.js",
+      "!src/services/**",
       "!src/components/**/index.js",
       "!src/components/app.js",
+      "!src/components/constants/constants.js",
       "!src/index.js",
       "!**/node_modules/**"
     ]

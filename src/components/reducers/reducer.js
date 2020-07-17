@@ -1,4 +1,3 @@
-import initialState from '../initialState'
 import { 
     INIT,
     ADD_UID, 
@@ -9,13 +8,24 @@ import {
     UPDATE_FILTER
 } from './../constants/constants'
 
+export const initialState = {
+    uid: '',
+    todo: [],
+    search: '',
+    filter: 'all',
+    loading: true,
+};
+
 export default function reducer(state = initialState, action){
 
     switch (action.type) {
         case INIT:
             return state;
         case ADD_UID:
-            return {...state, uid: action.payload};
+            return {
+                ...state, 
+                uid: action.payload
+            };
         case ADD_TODO_LIST:
             return {
                 ...state, 
