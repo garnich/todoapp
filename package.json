@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --open --mode development --hot --history-api-fallback",
-    "build": "webpack-dev-server --hot --open --mode production",
+    "prod": "webpack-dev-server --hot --open --mode production",
+    "build": "webpack --mode production",
     "precommit": "lint-staged",
     "eslint": "node_modules/.bin/eslint src/",
     "test": "jest",

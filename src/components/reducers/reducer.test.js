@@ -1,4 +1,4 @@
-import reducer, { initialState } from './reducer'
+import reducer from './reducer'
 import { INIT } from './../constants/constants'
 import { 
     addUidAction, 
@@ -7,7 +7,27 @@ import {
     upadteTodoList, 
     updateSearch, 
     updateFilter 
-} from './../actions/actions'
+} from './../actions/actionsTodo'
+
+const initialState = {
+        todoState: {
+            uid: '',
+            todo: [],
+            search: '',
+            filter: 'all',
+            loading: true
+        },
+        authState: {
+            singInEmail: '',
+            singInPassword: '',
+            singUpEmail: '',
+            singUpPassword1: '',
+            singUpPassword2: '',
+            emailNotVerified: true,
+            createUserWithEmailAndPassword: false,
+            error: null,
+          }
+    };
 
 describe('reducer', () => {
     test('INIT', () => {
@@ -25,8 +45,11 @@ describe('reducer', () => {
         const action = addUidAction(uid);
 
         expect(reducer(initialState, action)).toEqual({
-            ...initialState,
-            uid: '123'
+            todoState: {
+                ...initialState.todoState,
+                uid: '123'
+            },
+            authState: initialState.authState
           })
     });
 
@@ -35,9 +58,12 @@ describe('reducer', () => {
         const action = addTodoListAction(todo)
 
         expect(reducer(initialState, action)).toEqual({
-            ...initialState,
-            todo: ['1', '2', '3'],
-            loading: false
+            todoState: {
+                ...initialState.todoState,
+                todo: ['1', '2', '3'],
+                loading: false
+            },
+            authState: initialState.authState
           })
     });
 
@@ -45,9 +71,12 @@ describe('reducer', () => {
         const action = addTodoListAction(null)
 
         expect(reducer(initialState, action)).toEqual({
-            ...initialState,
-            todo: [],
-            loading: false
+            todoState: {
+                ...initialState.todoState,
+                todo: [],
+                loading: false
+            },
+            authState: initialState.authState
           })
     });
 
@@ -55,9 +84,12 @@ describe('reducer', () => {
         const action = logoutAction()
 
         expect(reducer(initialState, action)).toEqual({
-            ...initialState,
-            todo: [],
-            uid: ''
+            todoState: {
+                ...initialState.todoState,
+                todo: [],
+                uid: ''
+            },
+            authState: initialState.authState
           })
     });
 
@@ -65,39 +97,57 @@ describe('reducer', () => {
         const todo = ['1', '2', '3']
         const action = upadteTodoList(todo)
         const state = { 
-            ...initialState,
-            todo: ['1', '2']
+            todoState: {
+                ...initialState.todoState,
+                todo: ['1', '2']
+            },
+            authState: initialState.authState
         }
 
         expect(reducer(state, action)).toEqual({
-            ...state,
-            todo: ['1', '2', '3']
+            todoState: {
+                ...state.todoState,
+                todo: ['1', '2', '3']
+            },
+            authState: state.authState
           })
     });
 
     test('UPDATE_TODO_LIST empty todo', () => {
         const action = upadteTodoList(null)
         const state = { 
-            ...initialState,
-            todo: ['1', '2']
+            todoState: {
+                ...initialState.todoState,
+                todo: ['1', '2']
+            },
+            authState: initialState.authState
         }
 
         expect(reducer(state, action)).toEqual({
-            ...state,
-            todo: []
+            todoState: {
+                ...state.todoState,
+                todo: []
+            },
+            authState: state.authState
           })
     });
 
     test('UPDATE_TODO_LIST empty todo', () => {
         const action = upadteTodoList()
         const state = { 
-            ...initialState,
-            todo: ['1', '2']
+            todoState: {
+                ...initialState.todoState,
+                todo: ['1', '2']
+            },
+            authState: initialState.authState
         }
 
         expect(reducer(state, action)).toEqual({
-            ...state,
-            todo: []
+            todoState: {
+                ...state.todoState,
+                todo: []
+            },
+            authState: state.authState
           })
     });
 
@@ -106,8 +156,11 @@ describe('reducer', () => {
         const action = updateSearch(text)
 
         expect(reducer(initialState, action)).toEqual({
-            ...initialState,
-            search: '123'
+            todoState: {
+                ...initialState.todoState,
+                search: '123'
+            },
+            authState: initialState.authState
           })
     });
 
@@ -116,8 +169,11 @@ describe('reducer', () => {
         const action = updateFilter(text)
 
         expect(reducer(initialState, action)).toEqual({
-            ...initialState,
-            filter: 'all'
+            todoState: {
+                ...initialState.todoState,
+                filter: 'all'
+            },
+            authState: initialState.authState
           })
     });
 

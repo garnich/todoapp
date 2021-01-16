@@ -5,7 +5,7 @@ import {
     upadteTodoList, 
     updateSearch, 
     updateFilter 
-}  from './actions.js'
+}  from './actionsTodo'
 import { 
     ADD_UID, 
     ADD_TODO_LIST, 
@@ -13,7 +13,7 @@ import {
     UPDATE_TODO_LIST,
     UPDATE_SEARCH,
     UPDATE_FILTER 
-} from './../constants/constants'
+} from '../constants/constants'
 
 describe('actions', () => {
     it('addUidAction should create an action', () => {

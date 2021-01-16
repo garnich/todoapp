@@ -7,13 +7,13 @@ import { auth } from './../../services/Firebase'
 Enzyme.configure({ adapter: new Adapter() })
 
 describe('Test AuthorizationForm component', () => {
-  it('<AuthorizationForm> test snapshot', () => {
+  xit('<AuthorizationForm> test snapshot', () => {
     const wrapper = shallow(<AuthorizationForm />)
 
     expect(wrapper).toMatchSnapshot()
   })
 
-  it('<AuthorizationForm> handleInputChange test', () => {
+  xit('<AuthorizationForm> handleInputChange test', () => {
     const event = {
       target: {
         name: 'singInEmail',
@@ -27,7 +27,7 @@ describe('Test AuthorizationForm component', () => {
     expect(wrapper.state('singInEmail')).toEqual('Test Value')
   })
 
-  it('<AuthorizationForm> handleSingIn test FAILED auth PASSWORD', async () => {
+  xit('<AuthorizationForm> handleSingIn test FAILED auth PASSWORD', async () => {
     const event = {
       target: [{ value: 'test@test.test' }, { value: '' }],
       preventDefault: jest.fn(),
@@ -42,7 +42,7 @@ describe('Test AuthorizationForm component', () => {
     await expect(wrapper.state().error.message).toEqual(error)
   })
 
-  it('<AuthorizationForm> handleSingnUp test', () => {
+  xit('<AuthorizationForm> handleSingnUp test', () => {
     const event = {
       target: [
         { value: 'test@test.test' },
@@ -70,7 +70,7 @@ describe('Test AuthorizationForm component', () => {
     expect(wrapper.state('createUserWithEmailAndPassword')).toEqual(true)
   })
 
-  it('<AuthorizationForm> handleSingnUp test with different PASSWORDS', () => {
+  xit('<AuthorizationForm> handleSingnUp test with different PASSWORDS', () => {
     const event = {
       target: [
         { value: 'test@test.test' },

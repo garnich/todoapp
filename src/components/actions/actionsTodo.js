@@ -5,7 +5,7 @@ import {
     UPDATE_TODO_LIST,
     UPDATE_SEARCH,
     UPDATE_FILTER 
-} from './../constants/constants'
+} from '../constants/constants'
 
 const addUidAction = uid => ({
     type: ADD_UID,

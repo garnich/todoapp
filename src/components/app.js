@@ -8,7 +8,7 @@ import {
   upadteTodoList,
   updateSearch,
   updateFilter 
-} from './actions/actions'
+} from './actions/actionsTodo'
 import { 
   updateDataInFirebase, 
   updateItemInFireBase, 
@@ -204,13 +204,13 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({todoState}) => {
   return {
-      uid: state.uid,
-      todo: state.todo,
-      search: state.search,
-      filter: state.filter,
-      loading: state.loading,
+      uid: todoState.uid,
+      todo: todoState.todo,
+      search: todoState.search,
+      filter: todoState.filter,
+      loading: todoState.loading,
   }
 }
 

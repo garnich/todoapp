@@ -1,21 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import {
+  inputChgangeAction,
+  createUserAction,
+  createUserErrorAction,
+  samePassErrorAction,
+} from './../actions/actionsAuth'
 import { auth } from '../../services/Firebase'
+
 import './authorizationForm.scss'
 
 class AuthorizationForm extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      singInEmail: '',
-      singInPassword: '',
-      singUpEmail: '',
-      singUpPassword1: '',
-      singUpPassword2: '',
-      emailNotVerified: true,
-      createUserWithEmailAndPassword: false,
-      error: null,
-    }
 
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSignIn = this.handleSignIn.bind(this)
@@ -26,7 +23,7 @@ class AuthorizationForm extends Component {
     const name = event.target.name
     const value = event.target.value
 
-    this.setState({ [name]: value })
+    this.props.inputChgange(name, value)
   }
 
   handleSignIn(event) {
@@ -73,29 +70,14 @@ class AuthorizationForm extends Component {
         .createUserWithEmailAndPassword(email, password1)
         .then(() => {
           auth.currentUser.sendEmailVerification()
-          
-          this.setState({
-            singUpEmail: '',
-            singUpPassword1: '',
-            singUpPassword2: '',
-            createUserWithEmailAndPassword: true,
-            error: null,
-          })
+
+          this.props.createUser();
         })
         .catch(error => {
-          this.setState({
-            singUpEmail: '',
-            singUpPassword1: '',
-            singUpPassword2: '',
-            error,
-          })
+          this.props.createUserError(error)
         })
     } else {
-      this.setState({
-        singUpPassword1: '',
-        singUpPassword2: '',
-        error: { message: 'Passwords must be same' },
-      })
+        this.props.samePassError()
     }
   }
 
@@ -109,7 +91,7 @@ class AuthorizationForm extends Component {
       emailNotVerified,
       createUserWithEmailAndPassword,
       error,
-    } = this.state
+    } = this.props
 
     const emailCheckerInfo = (
       <div className="emailCheckerInfo text-center">
@@ -221,4 +203,26 @@ class AuthorizationForm extends Component {
   }
 }
 
-export default AuthorizationForm
+const mapStateToProps = ({authState}) => {
+  return {
+    singInEmail: authState.singInEmail,
+    singInPassword: authState.singInPassword,
+    singUpEmail: authState.singUpEmail,
+    singUpPassword1: authState.singUpPassword1,
+    singUpPassword2: authState.singUpPassword2,
+    emailNotVerified: authState.emailNotVerified,
+    createUserWithEmailAndPassword: authState.createUserWithEmailAndPassword,
+    error: authState.error,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      inputChgange: (name, value) => {dispatch(inputChgangeAction(name, value))},
+      createUser: () => {dispatch(createUserAction())},
+      createUserError: (err) => {dispatch(createUserErrorAction(err))},
+      samePassError: () => {dispatch(samePassErrorAction())}
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthorizationForm)

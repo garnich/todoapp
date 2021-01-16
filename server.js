@@ -20,4 +20,6 @@ app.get('/ping', function(req, res) {
 app.get('/app*', function(req, res) {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
-app.listen(port)
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}.`);
+})
