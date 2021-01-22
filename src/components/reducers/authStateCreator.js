@@ -2,7 +2,8 @@ import {
     INPUT_CHANGE,
     CREATE_USER,
     CREATE_USER_ERROR,
-    SAME_PASS_ERROR
+    SAME_PASS_ERROR,
+    LOGIN_USER_ERROR,
 } from './../constants/constants'
 
 const authStateCreator = (state, action) => {
@@ -23,7 +24,8 @@ const authStateCreator = (state, action) => {
         case INPUT_CHANGE:
             return {
                 ...state.authState,
-                [action.name]: action.value
+                [action.name]: action.value,
+                error: null
             };
         case CREATE_USER:
             return {
@@ -37,7 +39,6 @@ const authStateCreator = (state, action) => {
         case CREATE_USER_ERROR:
             return {
                 ...state.authState,
-                singUpEmail: '',
                 singUpPassword1: '',
                 singUpPassword2: '',
                 error: action.error
@@ -48,6 +49,13 @@ const authStateCreator = (state, action) => {
                 singUpPassword1: '',
                 singUpPassword2: '',
                 error: { message: 'Passwords must be same' },
+            }
+        case LOGIN_USER_ERROR:
+            return {
+                ...state.authState,
+                singInEmail: '',
+                singInPassword: '',
+                error: action.error
             }
         
         default:

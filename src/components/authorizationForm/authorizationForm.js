@@ -5,6 +5,7 @@ import {
   createUserAction,
   createUserErrorAction,
   samePassErrorAction,
+  loginUserErrorAction,
 } from './../actions/actionsAuth'
 import { auth } from '../../services/Firebase'
 
@@ -47,15 +48,7 @@ class AuthorizationForm extends Component {
           }
         }
       })
-      .catch(error => {
-        this.setState({
-          singInEmail: '',
-          singInPassword: '',
-          emailNotVerified: true,
-          createUserWithEmailAndPassword: false,
-          error,
-        })
-      })
+      .catch(error => this.props.loginUserError(error))
   }
 
   handleSignUp(event) {
@@ -221,7 +214,8 @@ const mapDispatchToProps = (dispatch) => {
       inputChgange: (name, value) => {dispatch(inputChgangeAction(name, value))},
       createUser: () => {dispatch(createUserAction())},
       createUserError: (err) => {dispatch(createUserErrorAction(err))},
-      samePassError: () => {dispatch(samePassErrorAction())}
+      samePassError: () => {dispatch(samePassErrorAction())},
+      loginUserError: (err) => {dispatch(loginUserErrorAction(err))}
   }
 }
 
