@@ -11,7 +11,7 @@ exports[`Test PageNotFind component <PageNotFind> 1`] = `
     404
   </p>
   <Link
-    to="/"
+    to="/app"
   >
     <button
       className="btn btn-outline-secondary btn-lg mt-4 mb-4"

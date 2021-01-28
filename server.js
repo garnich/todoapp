@@ -17,7 +17,7 @@ app.get('/ping', function(req, res) {
 })
 
 //обслуживание html
-app.get('/', function(req, res) {
+app.get('/app*', function(req, res) {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'))
 })
 app.listen(port, () => {

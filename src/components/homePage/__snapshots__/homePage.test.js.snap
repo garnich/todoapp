@@ -15,7 +15,7 @@ exports[`Test HomePage component <HomePage> 1`] = `
     .
   </p>
   <Link
-    to="/app"
+    to="/app/todo"
   >
     <button
       className="btn btn-outline-secondary btn-lg mt-4 mb-4"

@@ -8,7 +8,7 @@ const PageNotFind = () => {
     <div className="col-12 not_find_page">
       <p>Page not found</p>
       <p>404</p>
-      <Link to="/">
+      <Link to="/app">
         <button className="btn btn-outline-secondary btn-lg mt-4 mb-4">
           To Home page
         </button>
