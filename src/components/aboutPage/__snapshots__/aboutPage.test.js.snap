@@ -40,7 +40,7 @@ exports[`Test AboutPage component <AboutPage> 1`] = `
           GitHub
         </li>
         <li>
-          Herocu (as PaaS)
+          Heroku (as PaaS)
         </li>
       </ul>
     </div>
@@ -54,6 +54,19 @@ exports[`Test AboutPage component <AboutPage> 1`] = `
         Updates of ToDo App:
         <li>
           Implement unit test
+        </li>
+      </ul>
+    </div>
+    <div
+      className="about_page_content_item"
+    >
+      <h2>
+        ToDo App v.2
+      </h2>
+      <ul>
+        Updates of ToDo App:
+        <li>
+          Added Redux
         </li>
       </ul>
     </div>

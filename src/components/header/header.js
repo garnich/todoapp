@@ -11,17 +11,17 @@ const Header = props => {
       <nav>
         <ul className="mb-0">
           <li>
-            <NavLink to="/app/" exact={true} activeClassName="active">
+            <NavLink to="/" exact={true} activeClassName="active">
               Home
             </NavLink>
           </li>
           <li>
-            <NavLink to="/app/todo" activeClassName="active">
+            <NavLink to="/app" activeClassName="active">
               App
             </NavLink>
           </li>
           <li>
-            <NavLink to="/app/about" activeClassName="active">
+            <NavLink to="/about" activeClassName="active">
               About
             </NavLink>
           </li>

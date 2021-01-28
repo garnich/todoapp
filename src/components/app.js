@@ -28,6 +28,7 @@ import NewItem from './newItem'
 import Loader from './loader'
 import ErrorBoundary from './errorBoundary'
 import AuthorizationForm from './authorizationForm'
+import PageNotFind from './pageNotFind'
 
 import '../scss/main.scss'
 
@@ -149,10 +150,10 @@ class App extends Component {
           <Switch>
             <Fragment>
               <main>
-                <Route exact path="/app/">
+                <Route exact path="/">
                   <HomePage />
                 </Route>
-                <Route path="/app/todo">
+                <Route path="/app">
                   <ErrorBoundary>
                     {!uid && (
                       <AuthorizationForm onAuthChange={this.onAuthChange} />
@@ -191,8 +192,11 @@ class App extends Component {
                     )}
                   </ErrorBoundary>
                 </Route>
-                <Route path="/app/about">
+                <Route path="/about">
                   <AboutPage />
+                </Route>
+                <Route path="*">
+                  <PageNotFind />
                 </Route>
               </main>
             </Fragment>

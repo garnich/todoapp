@@ -23,7 +23,7 @@ class AboutPage extends Component {
               <li>Bootstrap</li>
               <li>Sass</li>
               <li>GitHub</li>
-              <li>Herocu (as PaaS)</li>
+              <li>Heroku (as PaaS)</li>
             </ul>
           </div>
           <div className="about_page_content_item">
@@ -31,6 +31,13 @@ class AboutPage extends Component {
             <ul>
               Updates of ToDo App:
               <li>Implement unit test</li>
+            </ul>
+          </div>
+          <div className="about_page_content_item">
+            <h2>ToDo App v.2</h2>
+            <ul>
+              Updates of ToDo App:
+              <li>Added Redux</li>
             </ul>
           </div>
         </div>

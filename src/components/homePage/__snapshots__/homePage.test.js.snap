@@ -15,7 +15,7 @@ exports[`Test HomePage component <HomePage> 1`] = `
     .
   </p>
   <Link
-    to="/app/todo"
+    to="/app"
   >
     <button
       className="btn btn-outline-secondary btn-lg mt-4 mb-4"
@@ -32,7 +32,7 @@ exports[`Test HomePage component <HomePage> 1`] = `
       title="NPM"
     />
     <FaReact
-      title="React"
+      title="React/Redux"
     />
     <FaNode
       title="Node"

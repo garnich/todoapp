@@ -20,7 +20,7 @@ class HomePage extends Component {
       <div className="col-12 home_page">
         <p>{`Hi, today is ${day} of ${month}, ${year} year.`}</p>
         <p>This is one of my app - ToDo<sup>v.1.1</sup>.</p>
-        <Link to="/app/todo">
+        <Link to="/app">
           <button className="btn btn-outline-secondary btn-lg mt-4 mb-4">
             {' '}
             Welcome!{' '}
@@ -28,7 +28,7 @@ class HomePage extends Component {
         </Link>
         <div className="reactIcons">
           <FaNpm title="NPM" />
-          <FaReact title="React" />
+          <FaReact title="React/Redux" />
           <FaNode title="Node" />
           <FaSass title="Sass" />
           <FaBootstrap title="Bootstrap" />
