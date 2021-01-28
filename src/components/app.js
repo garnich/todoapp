@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, hashHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { 
   addUidAction, 
@@ -145,7 +145,7 @@ class App extends Component {
 
     return (
       <Fragment>
-        <Router>
+        <Router history={hashHistory}>
           <Header auth={uid} logout={this.logout} />
           <Switch>
             <Fragment>
