@@ -1,16 +1,24 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { FunctionComponent, ReactElement } from 'react'
 
 import './todoItem.scss'
 
-const TodoItem = props => {
+interface IProps {
+  name: string,
+  delItem: () => void,
+  addToDone: () => void,
+  addToImportant: () => void,
+  done: boolean,
+  important: boolean
+}
+
+const TodoItem: FunctionComponent<IProps> = (props):ReactElement => {
   const { name, delItem, addToDone, addToImportant, done, important } = props
   let classNames = ''
   if (done) classNames += ' done'
   if (important) classNames += ' important'
 
   return (
-    <li className="list-group-item d-flex justify-content-between">
+    <li className="list-group-item d-flex justify-content-between align-items-center">
       <span onClick={addToDone} className={classNames}>
         {name}
       </span>
@@ -41,20 +49,6 @@ const TodoItem = props => {
       </span>
     </li>
   )
-}
-
-TodoItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  delItem: PropTypes.func.isRequired,
-  addToDone: PropTypes.func.isRequired,
-  addToImportant: PropTypes.func.isRequired,
-  done: PropTypes.bool,
-  important: PropTypes.bool,
-}
-
-TodoItem.defaultProps = {
-  done: false,
-  important: false,
 }
 
 export default TodoItem

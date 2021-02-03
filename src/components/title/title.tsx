@@ -1,9 +1,13 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { FunctionComponent, ReactElement } from 'react'
 
 import './title.scss'
 
-const Title = ({ todo, done }) => {
+interface ITitle {
+  todo: number,
+  done: number
+}
+
+const Title: FunctionComponent<ITitle>  = ({ todo, done }): ReactElement => {
   return (
     <div className="title pr-1">
       <h1 className="pr-1">My ToDo App</h1>
@@ -12,11 +16,6 @@ const Title = ({ todo, done }) => {
       </span>
     </div>
   )
-}
-
-Title.propTypes = {
-  todo: PropTypes.number.isRequired,
-  done: PropTypes.number.isRequired,
 }
 
 export default Title

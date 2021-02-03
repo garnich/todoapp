@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { FunctionComponent, ReactElement } from 'react'
+
 import './loader.scss'
 
-const Loader = () => {
+const Loader: FunctionComponent = (): ReactElement => {
   return (
     <div className="loader">
       <div className="spinner"></div>

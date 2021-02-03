@@ -8,7 +8,7 @@ firebase.initializeApp(firebaseConfig);
 export const provider = new firebase.auth.GoogleAuthProvider();
 export const auth = firebase.auth();  
 const msgStyle = 'background: #000; color: green; font-size: 14px; font-weight: 500';
-export const errorCatcher = (error, msg) => {
+export const errorCatcher = (error: any, msg: string): any => {
   error ? console.error(error) : console.log(`%c ${msg} SUCSESSFULY!`, msgStyle)
 };
 const currentDate = new Date().toISOString();

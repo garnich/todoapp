@@ -1,42 +1,42 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/components/index.tsx',
+  target: 'web',
+  mode: 'development',
   output: {
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/',
+  },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
   },
   module: {
     rules: [
       {
-        test: /\.js$/,
-        exclude: '/node_modules/',
-        use: {
-          loader: 'babel-loader',
-        },
+        test: /\.(ts|tsx)$/,
+        loader: 'awesome-typescript-loader',
       },
+      // {
+      //   enforce: "pre",
+      //   test: /\.js$/,
+      //   loader: "source-map-loader",
+      // },
       {
-        //   test: /\.css$/,
-        //   use: ['style-loader', 'css-loader']
-        // },
-        // {
         test: /\.s[ac]ss$/i,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },
-  devServer: {
-    overlay: true,
-  },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html',
-      favicon: 'favicon.ico',
+      template: path.resolve(__dirname, 'src', 'components', 'index.html'),
     }),
+    // new MiniCssExtractPlugin({
+    //   filename: "./src/yourfile.css",
+    // }),
   ],
-  mode: 'development',
   performance: {
     hints: false,
     maxEntrypointSize: 512000,

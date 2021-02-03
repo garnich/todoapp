@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { FunctionComponent, ReactElement } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import './header.scss'
 
-const Header = props => {
-  const { auth, logout } = props
+interface IHeader {
+  auth: string,
+  logout: () => void
+}
 
+const Header: FunctionComponent<IHeader> = ({ auth, logout }):ReactElement => {
   return (
     <header className="d-flex justify-content-left ">
       <nav>

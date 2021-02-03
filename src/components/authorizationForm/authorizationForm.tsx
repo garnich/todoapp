@@ -1,39 +1,71 @@
-import React, { Component } from 'react'
-import { auth } from './../../Firebase'
+import React, { ChangeEvent, FunctionComponent, ReactElement, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { auth } from '../../Firebase'
 import './authorizationForm.scss'
 
-class AuthorizationForm extends Component {
-  constructor(props) {
-    super(props)
+interface IState {
+  singInEmail: string,
+  singInPassword: string
+  singUpEmail: string
+  singUpPassword1: string
+  singUpPassword2: string
+  emailNotVerified: boolean,
+  createUserWithEmailAndPassword: boolean,
+  error: null | {message: string},
+}
 
-    this.state = {
-      singInEmail: '',
-      singInPassword: '',
-      singUpEmail: '',
-      singUpPassword1: '',
-      singUpPassword2: '',
-      emailNotVerified: true,
-      createUserWithEmailAndPassword: false,
-      error: null,
-    }
+interface IProps {
+  onAuthChange: (uid: string) => void
+}
 
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleSignIn = this.handleSignIn.bind(this)
-    this.handleSignUp = this.handleSignUp.bind(this)
+const state: IState = {
+  singInEmail: '',
+  singInPassword: '',
+  singUpEmail: '',
+  singUpPassword1: '',
+  singUpPassword2: '',
+  emailNotVerified: true,
+  createUserWithEmailAndPassword: false,
+  error: null,
+}
+
+type FormInputs = {
+  singInEmail?: string,
+  singInPassword?: string,
+  singUpEmail?: string,
+  singUpPassword1?: string,
+  singUpPassword2?: string,
+}
+
+const AuthorizationForm: FunctionComponent<IProps> = ({onAuthChange}):ReactElement => {
+  const [formState, setFormState] = useState(state);
+  const { register, handleSubmit } = useForm<FormInputs>();
+  const {
+    singInEmail,
+    singInPassword,
+    singUpEmail,
+    singUpPassword1,
+    singUpPassword2,
+    emailNotVerified,
+    createUserWithEmailAndPassword,
+    error,
+  } = formState;
+
+  function handleInputChange(event: ChangeEvent<HTMLInputElement>):void {
+    const name: string = event.target.name
+    const value: string = event.target.value
+
+    setFormState({
+      ...formState,
+      [name]: value
+    })
   }
 
-  handleInputChange(event) {
-    const name = event.target.name
-    const value = event.target.value
-
-    this.setState({ [name]: value })
-  }
-
-  handleSignIn(event) {
-    event.preventDefault()
-    const data = new FormData(event.target)
-    const email = data.get('singInEmail')
-    const password = data.get('singInPassword')
+  // function handleSignIn(data: FormInputs, event: any): void {
+  function handleSignIn(data: FormInputs): void {
+    // event.preventDefault();
+    const email: string = data['singInEmail']
+    const password: string = data['singInPassword']
 
     auth
       .signInWithEmailAndPassword(email, password)
@@ -50,16 +82,18 @@ class AuthorizationForm extends Component {
       })
       .then(data => {
         if (data) {
-          this.props.onAuthChange(data)
+          onAuthChange(data)
         } else {
-          this.setState({
+          setFormState({
+            ...formState,
             emailNotVerified: false,
             error: null,
           })
         }
       })
       .catch(error => {
-        this.setState({
+        setFormState({
+          ...formState,
           singInEmail: '',
           singInPassword: '',
           emailNotVerified: true,
@@ -68,13 +102,11 @@ class AuthorizationForm extends Component {
         })
       })
   }
-
-  handleSignUp(event) {
-    event.preventDefault()
-    const data = new FormData(event.target)
-    const email = data.get('singUpEmail')
-    const password1 = data.get('singUpPassword1')
-    const password2 = data.get('singUpPassword2')
+  
+  function handleSignUp(data: FormInputs): void {
+    const email = data['singUpEmail']
+    const password1 = data['singUpPassword1']
+    const password2 = data['singUpPassword2']
 
     if (password1 === password2) {
       auth
@@ -86,7 +118,8 @@ class AuthorizationForm extends Component {
         })
         .then(data => {
           if (data) {
-            this.setState({
+            setFormState({
+              ...formState,
               singUpEmail: '',
               singUpPassword1: '',
               singUpPassword2: '',
@@ -96,7 +129,8 @@ class AuthorizationForm extends Component {
           }
         })
         .catch(error => {
-          this.setState({
+          setFormState({
+            ...formState,
             singUpEmail: '',
             singUpPassword1: '',
             singUpPassword2: '',
@@ -104,7 +138,8 @@ class AuthorizationForm extends Component {
           })
         })
     } else {
-      this.setState({
+      setFormState({
+        ...formState,
         singUpPassword1: '',
         singUpPassword2: '',
         error: { message: 'Passwords must be same' },
@@ -112,39 +147,25 @@ class AuthorizationForm extends Component {
     }
   }
 
-  render() {
-    const {
-      singInEmail,
-      singInPassword,
-      singUpEmail,
-      singUpPassword1,
-      singUpPassword2,
-      emailNotVerified,
-      createUserWithEmailAndPassword,
-      error,
-    } = this.state
-
-    const emailCheckerInfo = (
-      <div className="emailCheckerInfo text-center">
-        <p className="alert alert-warning">Please check your email!</p>
-      </div>
-    )
-
-    return (
+  return(
       <div className="errorWrapper">
         <div className="loginErrorWrapper">
           {error && (
             <p className="alert alert-danger text-center">{error.message}</p>
           )}
-          {(!emailNotVerified || createUserWithEmailAndPassword) &&
-            emailCheckerInfo}
+          {(!emailNotVerified || createUserWithEmailAndPassword) && (
+            <div className="emailCheckerInfo text-center">
+              <p className="alert alert-warning">Please check your email!</p>
+            </div>
+          )}
         </div>
         <div className="authWrapper">
           <form
             autoComplete="off"
             role="form"
             className="col-3"
-            onSubmit={this.handleSignIn}
+            // onSubmit={(event) => handleSubmit(handleSignIn)(event)}
+            onSubmit={handleSubmit(handleSignIn)}
           >
             <h2 className="title">SignIn</h2>
             <div className="form-group">
@@ -155,9 +176,10 @@ class AuthorizationForm extends Component {
                 name="singInEmail"
                 id="email1"
                 value={singInEmail}
-                onChange={this.handleInputChange}
+                onChange={handleInputChange}
                 placeholder="Email"
                 required
+                ref={register}
               />
             </div>
             <div className="form-group">
@@ -168,9 +190,10 @@ class AuthorizationForm extends Component {
                 name="singInPassword"
                 id="pwd"
                 value={singInPassword}
-                onChange={this.handleInputChange}
+                onChange={handleInputChange}
                 placeholder="Password"
                 required
+                ref={register}
               />
             </div>
             <button type="submit" className="btn btn-outline-secondary">
@@ -182,7 +205,7 @@ class AuthorizationForm extends Component {
             autoComplete="off"
             role="form"
             className="col-3"
-            onSubmit={this.handleSignUp}
+            onSubmit={handleSubmit(handleSignUp)}
           >
             <h2 className="title">SignUp</h2>
             <div className="form-group">
@@ -193,9 +216,10 @@ class AuthorizationForm extends Component {
                 id="email2"
                 name="singUpEmail"
                 value={singUpEmail}
-                onChange={this.handleInputChange}
+                onChange={handleInputChange}
                 placeholder="Email"
                 required
+                ref={register}
               />
             </div>
             <div className="form-group">
@@ -206,9 +230,10 @@ class AuthorizationForm extends Component {
                 name="singUpPassword1"
                 id="pwd1"
                 value={singUpPassword1}
-                onChange={this.handleInputChange}
+                onChange={handleInputChange}
                 placeholder="Password"
                 required
+                ref={register}
               />
             </div>
             <div className="form-group">
@@ -219,9 +244,10 @@ class AuthorizationForm extends Component {
                 name="singUpPassword2"
                 id="pwd2"
                 value={singUpPassword2}
-                onChange={this.handleInputChange}
+                onChange={handleInputChange}
                 placeholder="Repeat password"
                 required
+                ref={register}
               />
             </div>
             <button type="submit" className="btn btn-outline-secondary">
@@ -232,6 +258,5 @@ class AuthorizationForm extends Component {
       </div>
     )
   }
-}
 
 export default AuthorizationForm
