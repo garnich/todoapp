@@ -1,4 +1,4 @@
-import React, { Component, FunctionComponent } from 'react'
+import React, { FunctionComponent } from 'react'
 import { Link } from 'react-router-dom'
 import { FaNpm, FaReact, FaNode, FaSass, FaBootstrap } from 'react-icons/fa'
 import { DiFirebase } from 'react-icons/di'

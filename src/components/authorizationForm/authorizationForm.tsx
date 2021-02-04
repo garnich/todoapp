@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FunctionComponent, ReactElement, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { auth } from '../../Firebase'
+import { useForm } from 'react-hook-form'
+import { auth } from '../../db/Firebase'
 import './authorizationForm.scss'
 
 interface IState {
@@ -61,9 +61,7 @@ const AuthorizationForm: FunctionComponent<IProps> = ({onAuthChange}):ReactEleme
     })
   }
 
-  // function handleSignIn(data: FormInputs, event: any): void {
   function handleSignIn(data: FormInputs): void {
-    // event.preventDefault();
     const email: string = data['singInEmail']
     const password: string = data['singInPassword']
 
@@ -164,7 +162,6 @@ const AuthorizationForm: FunctionComponent<IProps> = ({onAuthChange}):ReactEleme
             autoComplete="off"
             role="form"
             className="col-3"
-            // onSubmit={(event) => handleSubmit(handleSignIn)(event)}
             onSubmit={handleSubmit(handleSignIn)}
           >
             <h2 className="title">SignIn</h2>

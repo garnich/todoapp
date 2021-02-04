@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState, useEffect, useCallback, useMemo } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Header from './header'
@@ -11,15 +11,17 @@ import ItemStatusFilter from './itemStatusFilter'
 import TodoList from './todoList'
 import NewItem from './newItem'
 import Loader from './loader'
-// import ErrorBoundary from './errorBoundary'
+import ErrorBoundary from './errorBoundary'
 import AuthorizationForm from './authorizationForm'
-import firebase, { errorCatcher } from '../Firebase'
+import { errorCatcher } from '../db/Firebase'
+import { deleteItemInFireBase, updateItemInFireBase, updateFireBase, dbRef } from '../db/db-helpers'
+import { filterParam } from '../utils/helpers'
 
 import '../scss/main.scss'
 
 type FilterMarker = 'all' | 'todo' | 'done';
 
-interface Itodo {
+export interface Itodo {
     done: boolean,
     hide: boolean,
     id: string,
@@ -46,156 +48,107 @@ const state: Istate = {
 const App = () => {
     const [appState, setAppstate] = useState<Istate>(state);
 
-    function deleteItem (id: string): void {
-        const { todo } = appState;
+    const deleteItem = useCallback((id:string):void => {
+      const { todo, uid } = appState;
         const idx: number = todo.findIndex(el => el.id === id)
-        console.log('deleteItem', idx)
         const newData = [...todo.slice(0, idx), ...todo.slice(idx + 1)]
-        console.log('deleteItem newData', newData)
         
         setAppstate({
             ...appState,
             todo: newData
         })
 
-      deleteItemInFireBase(newData, 'Item REMOVED')
-    }
+      deleteItemInFireBase(newData, uid, 'Item REMOVED')
+    }, [appState]);
 
-    function deleteItemInFireBase (data: Array<Itodo>, msg: string): void {
-        const { uid } = appState;
-        
-        firebase
-        .database()
-        .ref(`${uid}/todo`)
-        .remove()
+    const addToDone = useCallback((id: string): void => {
+      const { todo, uid } = appState;
+      const idx: number = todo.findIndex(el => el.id === id)
+      const oldItem = todo[idx]
+      const newItem = { ...oldItem, done: !oldItem.done }
 
-        firebase
-        .database()
-        .ref(`${uid}/todo`)
-        .set(data, error => errorCatcher(error, msg))
-    }
-
-    function addToDone(id: string): void {
-        const { todo } = appState;
-        const idx: number = todo.findIndex(el => el.id === id)
-        const oldItem = todo[idx]
-        const newItem = { ...oldItem, done: !oldItem.done }
-
-        setAppstate({
-            ...appState,
-            todo: [...todo.slice(0, idx), newItem, ...todo.slice(idx + 1)],
-        })
-        updateItemInFireBase(idx, newItem, 'Item add to DONE')
-      }
-
-    function addToImportant(id: string):void {
-        const { todo } = appState
-        const idx = todo.findIndex(el => el.id === id)
-        const oldItem = todo[idx]
-        const newItem = { ...oldItem, important: !oldItem.important }
-
-        setAppstate({
-            ...appState,
-            todo: [...todo.slice(0, idx), newItem, ...todo.slice(idx + 1)]
-        })
-
-        updateItemInFireBase(idx, newItem, 'Item change importance')
-    }
-
-    function updateItemInFireBase(itemIndex: number, newItemData: Itodo, msg: string):void {
-        const { uid } = appState;
-
-        firebase
-        .database()
-        .ref(`${uid}/todo/${itemIndex}`)
-        .update(newItemData, error => errorCatcher(error, msg))
-    }
-
-    function addNewItem (text: string): void {
-        const { todo } = appState;
-        const newItem: Itodo = {
-            name: text,
-            hide: true,
-            id: new Date().getTime().toString(),
-            important: false,
-            done: false,
-        };
-
-        setAppstate({
-            ...appState,
-            todo: [...todo, newItem]
-        })
-    }
-
-    function searchParam(text:string):void {
-        setAppstate({
-            ...appState,
-            search: text
-        })
-    }
-
-    function filterParam(items:Array<Itodo>, filter: string):Array<Itodo> {
-        if (items) {
-            switch (filter) {
-                case 'all':
-                return items
-                case 'todo':
-                return items.filter(item => !item.done)
-                case 'done':
-                return items.filter(item => item.done)
-                default:
-                return items
-            }
-        }
-    }
-
-    function onFilterChange(filter: FilterMarker): void {
-        setAppstate({
-            ...appState,
-            filter: filter
-        })
-    }
-
-    function onAuthChange(data: string): void{
-        const ref = firebase.database().ref(`${data}/todo`)
-
-        ref.on('value', snapshot => {
-        const ToDo = snapshot.val()
-        
-        const newState = {
+      setAppstate({
           ...appState,
-          todo: ToDo || [],
-          loading: false,
-          uid: data
-        };
-        setAppstate({...newState}),
-          (error: any): void => errorCatcher(error, 'Connection to DataBase')
-        })
-    }
+          filter: 'all',
+          todo: [...todo.slice(0, idx), newItem, ...todo.slice(idx + 1)],
+      })
+      updateItemInFireBase(uid, idx, newItem, 'Item add to DONE - CHANGED')
+    }, [appState])
 
-    function logout():void {
-        setAppstate({
-            ...appState,
-            uid: ''
-        })
-        console.log('USER logged out SUCSESSFULY!')
-    }
+    const addToImportant = useCallback((id: string):void => {
+      const { todo, uid } = appState
+      const idx = todo.findIndex(el => el.id === id)
+      const oldItem = todo[idx]
+      const newItem = { ...oldItem, important: !oldItem.important }
 
-    // useEffect(() => {
-    //     const { uid, todo } = appState;
-    //     console.log('updated')
+      setAppstate({
+          ...appState,
+          todo: [...todo.slice(0, idx), newItem, ...todo.slice(idx + 1)]
+      })
 
-    //     firebase
-    //         .database()
-    //         .ref(`${uid}/todo`)
-    //         .set(todo, error => errorCatcher(error, 'New item add'))
-    // // }, [appState.todo]);
-    // }, []);
+      updateItemInFireBase(uid, idx, newItem, 'Item change importance')
+    },[appState])
+    
+    const addNewItem = useCallback((text: string): void => {
+      const { todo } = appState;
+      const newItem: Itodo = {
+          name: text,
+          hide: true,
+          id: new Date().getTime().toString(),
+          important: false,
+          done: false,
+      };
+
+      setAppstate({
+          ...appState,
+          todo: [...todo, newItem]
+      })
+    }, [appState.todo])
+
+    const searchParam = useCallback((text:string):void => {
+      setAppstate({
+          ...appState,
+          search: text
+      })
+    }, [appState]);
+
+    const onFilterChange = useCallback((filter: FilterMarker): void => {
+      setAppstate({
+          ...appState,
+          filter: filter
+      })
+    }, [appState])
+
+    const onAuthChange = useCallback((data: string): void => {
+      dbRef(data).on('value', snapshot => {
+      const ToDo = snapshot.val()
+      
+      const newState = {
+        ...appState,
+        todo: ToDo || [],
+        loading: false,
+        uid: data
+      };
+      setAppstate({...newState}),
+        (error: any): void => errorCatcher(error, 'Connection to DataBase')
+      })
+    }, [appState])
+
+    const logout = useCallback(():void => {
+      setAppstate({
+          ...appState,
+          uid: ''
+      })
+      console.log('USER logged out SUCSESSFULY!')
+    }, [appState])
+
+    useEffect(() => {
+        const { uid, todo } = appState;
+        updateFireBase(uid, todo)
+    }, [appState.todo]);
 
     const { uid, todo, search, filter, loading } = appState;
-    console.log('TODO', todo)
-    const done = todo.filter(item => item.done === false)
-    console.log('done', done)
+    const done = useMemo(() => todo.filter(item => item.done === false), [todo])
 
     const todoFiltered = filterParam(
       todo.filter(item => {
@@ -218,7 +171,7 @@ const App = () => {
                           <HomePage />
                         </Route>
                         <Route path="/todo">
-                          {/* <ErrorBoundary> */}
+                          <ErrorBoundary>
                             {!uid && (
                               <AuthorizationForm onAuthChange={onAuthChange} />
                             )}
@@ -260,7 +213,7 @@ const App = () => {
                                 </div>
                               </div>
                             )}
-                          {/* </ErrorBoundary> */}
+                          </ErrorBoundary>
                         </Route>
                         <Route path="/about">
                           <AboutPage />

@@ -1,5 +1,4 @@
 import React, { FunctionComponent, ReactElement } from 'react'
-import PropTypes from 'prop-types'
 
 import './itemStatusFlter.scss'
 

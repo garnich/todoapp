@@ -1,39 +1,29 @@
 import React, { Component, ErrorInfo, ReactNode  } from 'react'
 
 interface IProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
 interface IState {
-  hasError: boolean;
-  error: string
+  hasError: boolean,
+  errorInfo: ErrorInfo
 }
 
 class ErrorBoundary extends Component<IProps, IState> {
-  constructor(props) {
-    super(props)
-    this.state = {
-      hasError: false,
-      error: '',
-    }
-  }
   public state: IState = {
     hasError: false,
-    error: ''
+    errorInfo: null
   }
 
-  componentDidCatch(error, info: ErrorInfo): void {
-    this.setState({
-      hasError: true,
-      error: JSON.stringify(info),
-    })
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("Uncaught error:", error, errorInfo);
   }
 
   render() {
-    const { hasError, error } = this.state
+    const { hasError, errorInfo } = this.state
 
     return hasError ? (
-      <p className="alert alert-danger">{error}</p>
+      <p className="alert alert-danger">{errorInfo}</p>
     ) : (
       this.props.children
     )
